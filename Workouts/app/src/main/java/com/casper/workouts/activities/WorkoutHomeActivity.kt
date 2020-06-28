@@ -61,8 +61,27 @@ class WorkoutHomeActivity : AppCompatActivity() {
     private fun setNextWorkoutDay() {
         workoutInfo = workoutUtils.getWorkoutInfo()
 
+        // Set UI information
         workout_week_name.text = workoutInfo.workoutWeek.week.name
         workout_day_name.text = workoutInfo.workoutDay.day.name
+    }
+
+    override fun onPause() {
+        updateWorkout()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        updateWorkout()
+        super.onDestroy()
+    }
+
+    private fun updateWorkout() {
+        val workout = workoutUtils.getWorkout()
+        workout.currentWorkoutWeek = workoutInfo.weekIndex
+        workout.currentWorkoutDay = workoutInfo.dayIndex
+        workout.updateDate()
+        workoutViewModel.update(workout)
     }
 
     fun onEditWorkoutButtonClicked(view: View) {

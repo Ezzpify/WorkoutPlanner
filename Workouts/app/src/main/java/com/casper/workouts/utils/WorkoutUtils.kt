@@ -3,14 +3,17 @@ package com.casper.workouts.utils
 import com.casper.workouts.room.models.FullWorkout
 import com.casper.workouts.room.models.FullWorkoutDay
 import com.casper.workouts.room.models.FullWorkoutWeek
+import com.casper.workouts.room.models.Workout
 import java.io.Serializable
 
 class WorkoutUtils(private val fullWorkout: FullWorkout) {
-    data class WorkoutInfo(val workoutWeek: FullWorkoutWeek, val workoutDay: FullWorkoutDay): Serializable
+    data class WorkoutInfo(val workoutWeek: FullWorkoutWeek, val workoutDay: FullWorkoutDay, val weekIndex: Int, val dayIndex: Int): Serializable
 
     fun moveDayForward() {
         fullWorkout.workout.currentWorkoutDay += 1
     }
+
+    fun getWorkout(): Workout = fullWorkout.workout
 
     fun getWorkoutInfo(): WorkoutInfo {
         var newWeek = getNextWeek()
@@ -31,8 +34,13 @@ class WorkoutUtils(private val fullWorkout: FullWorkout) {
             return getWorkoutInfo()
         }
 
+        // Get indexes for new week and day
+        // Could evaluate these during the loop, but I'm lazy now
+        val newWeekIndex = fullWorkout.weeks.indexOfFirst { it.week.weekId == newWeek.week.weekId }
+        val newDayIndex = newWeek.days.indexOfFirst { it.day.dayId == newDay.day.dayId }
+
         // Returns our new workout day
-        return WorkoutInfo(newWeek, newDay)
+        return WorkoutInfo(newWeek, newDay, newWeekIndex, newDayIndex)
     }
 
     private fun getNextWeek(): FullWorkoutWeek {

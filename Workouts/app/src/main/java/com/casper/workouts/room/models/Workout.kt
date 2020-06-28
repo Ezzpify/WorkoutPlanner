@@ -25,8 +25,6 @@ data class Workout (
 
     @ColumnInfo(name = "CurrentWorkoutDay") var currentWorkoutDay: Int,
 
-    @ColumnInfo(name = "CurrentExerciseIndex") var currentExerciseIndex: Int,
-
     @ColumnInfo(name = "LastUpdated") var lastUpdated: Long = System.currentTimeMillis()
 ) : Serializable {
     fun updateDate() {
