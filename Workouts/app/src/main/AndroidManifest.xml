@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.casper.workouts">
+
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.CreateWorkoutActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".activities.WorkoutHomeActivity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".activities.WorkoutWeekListActivity" />
+        <activity android:name=".activities.CreateWeekActivity" />
+        <activity android:name=".activities.WorkoutDayListActivity" />
+        <activity android:name=".activities.CreateDayActivity" />
+        <activity android:name=".activities.WorkoutExerciseListActivity" />
+        <activity android:name=".activities.CreateExerciseActivity" />
+        <activity android:name=".activities.ExercisesSearchActivity" />
+        <activity android:name=".activities.WorkoutStartActivity" />
+        <activity android:name=".activities.WorkoutCompleteActivity" />
+        <activity android:name=".activities.EditExerciseActivity" />
+        <activity android:name=".activities.EditDayActivity" />
+        <activity android:name=".activities.EditWeekActivity" />
+        <activity android:name=".activities.EditWorkoutActivity" />
+    </application>
+
+</manifest>

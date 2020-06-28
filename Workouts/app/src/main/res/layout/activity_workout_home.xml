@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:id="@+id/home_workout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_view_large"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/workout_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder"
+            style="@style/PageTitle"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_workout_home_next_up"
+            style="@style/PageSubtitle"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="@dimen/rounded_value_normal"
+            android:layout_marginTop="@dimen/padding_view_large">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/padding_view_burger"
+                android:paddingBottom="@dimen/padding_view_burger"
+                android:paddingStart="@dimen/padding_view_large"
+                android:paddingEnd="@dimen/padding_view_large">
+
+                <TextView
+                    android:id="@+id/workout_week_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder"
+                    android:gravity="center"
+                    android:textSize="@dimen/text_size_big"
+                    android:textStyle="bold"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"
+                    android:layout_marginTop="@dimen/padding_view_tiny"
+                    android:layout_marginBottom="@dimen/padding_view_tiny"
+                    android:layout_marginStart="@dimen/padding_view_large"
+                    android:layout_marginEnd="@dimen/padding_view_large"/>
+
+                <TextView
+                    android:id="@+id/workout_day_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder"
+                    android:gravity="center"
+                    android:textSize="@dimen/text_size_title"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/padding_view_large">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/skip"
+                android:layout_marginEnd="@dimen/padding_view_normal"
+                android:onClick="onSkipWorkoutButtonClicked"
+                style="@style/ButtonBlue"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/activity_workout_home_start"
+                android:layout_marginStart="@dimen/padding_view_normal"
+                android:onClick="onStartWorkoutButtonClicked"
+                style="@style/ButtonDark"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/home_no_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_view_large">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_workout_home_no_schedule_title"
+            style="@style/PageTitle"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_workout_home_no_schedule_desc"
+            android:layout_marginTop="@dimen/padding_view_normal"
+            style="@style/PageSubtitle"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_create_workout"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/padding_view_normal"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_edit_black_24dp"
+        android:tint="@color/white"
+        android:onClick="onEditWorkoutButtonClicked"/>
+
+</RelativeLayout>

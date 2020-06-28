@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/colorAccent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Workout complete"
+            android:textColor="@color/white"
+            style="@style/PageTitle"/>
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            app:srcCompat="@drawable/sunglasses"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/padding_view_large"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

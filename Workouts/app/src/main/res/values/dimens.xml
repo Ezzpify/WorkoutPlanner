@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- View padding -->
+    <dimen name="padding_view_american">100dp</dimen>
+    <dimen name="padding_view_burger">50dp</dimen>
+    <dimen name="padding_view_large">24dp</dimen>
+    <dimen name="padding_view_normal">16dp</dimen>
+    <dimen name="padding_view_small">10dp</dimen>
+    <dimen name="padding_view_tiny">5dp</dimen>
+
+    <!-- Text size -->
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_medium">15sp</dimen>
+    <dimen name="text_size_big">18sp</dimen>
+    <dimen name="text_size_title">28sp</dimen>
+
+    <!-- Toolbar -->
+    <dimen name="elevation_toolbar">4dp</dimen>
+
+    <!-- Round values -->
+    <dimen name="rounded_value_large">32dp</dimen>
+    <dimen name="rounded_value_big">16dp</dimen>
+    <dimen name="rounded_value_normal">8dp</dimen>
+    <dimen name="rounded_value_small">2dp</dimen>
+    <dimen name="rounded_value_max">999dp</dimen>
+
+    <!-- View values -->
+    <dimen name="button_min_height">40dp</dimen>
+    <dimen name="button_small_min_height">20dp</dimen>
+    <dimen name="input_min_height">15dp</dimen>
+
+    <!-- Card view values -->
+    <dimen name="card_view_elevation">2dp</dimen>
+    <dimen name="card_view_margin">2dp</dimen>
+    <dimen name="card_view_list_padding">14dp</dimen>
+
+    <!-- List values -->
+    <dimen name="list_item_spacing">10dp</dimen>
+</resources>

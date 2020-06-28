@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_view_large">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_week_edit_title"
+            style="@style/PageTitle"/>
+
+        <EditText
+            android:id="@+id/week_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/activity_create_week_input_hint_name"
+            android:inputType="textCapSentences"
+            android:layout_marginTop="@dimen/padding_view_normal"
+            style="@style/Input"/>
+
+        <EditText
+            android:id="@+id/week_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/activity_create_week_input_hint_desc"
+            android:inputType="textCapSentences"
+            android:layout_marginTop="@dimen/padding_view_normal"
+            style="@style/Input"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/save"
+            android:layout_marginTop="@dimen/padding_view_normal"
+            android:onClick="onSaveWeekButtonClicked"
+            style="@style/ButtonDark"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

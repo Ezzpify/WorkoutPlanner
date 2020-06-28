@@ -1,0 +1,107 @@
+<resources>
+    <string name="app_name">Workouts</string>
+
+    <!-- General -->
+    <string name="placeholder">Placeholder</string>
+    <string name="required">Required</string>
+    <string name="save">Save</string>
+    <string name="skip">Skip</string>
+    <string name="ok">OK</string>
+    <string name="close">Close</string>
+    <string name="error">Error</string>
+    <string name="go_back">Go back</string>
+    <string name="back">Back</string>
+    <string name="previous">Previous</string>
+    <string name="cancel">Cancel</string>
+    <string name="no_description">No description</string>
+    <string name="delete">Delete</string>
+    <string name="never">Never</string>
+
+    <!-- General errors -->
+    <string name="general_error_oops">Something broke horribly.</string>
+
+    <!-- Activity main -->
+    <string name="activity_main_title">Select your workout</string>
+    <string name="activity_main_subtitle">Last workout: %1$s</string>
+
+    <!-- Activity create workout -->
+    <string name="activity_create_workout_title">Create your workout</string>
+    <string name="activity_create_workout_select_photo">Select photo</string>
+    <string name="activity_create_workout_input_hint_name">* Workout name</string>
+    <string name="activity_create_workout_input_hint_desc">Workout description</string>
+    <string name="activity_create_workout_input_hint_image">Workout length (weeks)</string>
+
+    <!-- Activity workout home -->
+    <string name="activity_workout_home_next_up">Next up…</string>
+    <string name="activity_workout_home_start">Start workout</string>
+    <string name="activity_workout_home_no_schedule_title">No workout schedule</string>
+    <string name="activity_workout_home_no_schedule_desc">Before you can start working out you need to add a workout schedule.\n\nClick the edit button on the bottom right side of the screen to start adding weeks, days and exercises!</string>
+
+    <!-- Activity edit workout -->
+    <string name="activity_edit_workout_title">Edit workout</string>
+    <string name="activity_edit_workout_change_photo">Change photo</string>
+
+    <!-- Activity workout week -->
+    <string name="activity_workout_week_title">Scheduled weeks</string>
+
+    <!-- Activity create week -->
+    <string name="activity_create_week_title">Create week</string>
+    <string name="activity_create_week_input_hint_name">* Week name</string>
+    <string name="activity_create_week_input_hint_desc">Week description</string>
+
+    <!-- Activity workout day -->
+    <string name="activity_workout_day_title">Scheduled days</string>
+
+    <!-- Activity create day -->
+    <string name="activity_create_day_title">Create day</string>
+    <string name="activity_create_day_input_hint_name">* Day name</string>
+    <string name="activity_create_day_input_hint_desc">Day description</string>
+
+    <!-- Activity workout exercise -->
+    <string name="activity_workout_exercise_title">Scheduled exercises</string>
+    <string name="activity_workout_exercise_add_dialog_title">Add exercise</string>
+    <string name="activity_workout_exercise_add_dialog_desc">Do you want to create a new exercise, or add one that you already made?</string>
+    <string name="activity_workout_exercise_add_dialog_option_one">Existing</string>
+    <string name="activity_workout_exercise_add_dialog_option_two">New</string>
+    <string name="activity_workout_exercise_already_exists_error">This exercise is already added.</string>
+
+    <!-- Activity create exercise -->
+    <string name="activity_create_exercise_title">Create exercise</string>
+    <string name="activity_create_exercise_select_photo">Select photo</string>
+    <string name="activity_create_exercise_input_hint_name">* Exercise name</string>
+    <string name="activity_create_exercise_input_hint_desc">Exercise description</string>
+    <string name="activity_create_exercise_input_tag_desc">* Exercise tag</string>
+    <string name="activity_create_exercise_input_hint_weight">Current weight</string>
+    <string name="activity_create_exercise_input_hint_weight_unit">Unit</string>
+    <string name="activity_create_exercise_input_hint_sets">Number of sets</string>
+    <string name="activity_create_exercise_input_hint_reps">Number of reps</string>
+
+    <!-- Activity exercise search -->
+    <string name="activity_exercise_search_title">Search exercises</string>
+    <string name="activity_exercise_search_no_exercises">You don\'t have any exercises</string>
+
+    <!-- Activity workout start -->
+    <string name="activity_workout_start_weight_format">%1$.2f %2$s</string>
+    <string name="activity_workout_start_reps_format">%1$d Repetitions</string>
+    <string name="activity_workout_start_sets_format">%1$d Sets</string>
+    <string name="activity_workout_start_update_weight">Update weight</string>
+    <string name="activity_workout_start_next_exercise">Next exercise</string>
+    <string name="activity_workout_start_complete_workout">Complete workout</string>
+    <string name="activity_workout_start_update_weight_dialog_title">Update weight</string>
+    <string name="activity_workout_start_update_weight_dialog_desc">Enter your new weight for this exercise.\n\nThis will change the weight in all days which this exercise belongs to.</string>
+
+    <!-- Activity exercise edit -->
+    <string name="activity_exercise_edit_title">Edit exercise</string>
+    <string name="activity_exercise_edit_change_photo">Change photo</string>
+    <string name="activity_exercise_edit_create_deload">Deload version</string>
+
+    <!-- Activity day edit -->
+    <string name="activity_day_edit_title">Edit day</string>
+
+    <!-- Activity week edit -->
+    <string name="activity_week_edit_title">Edit week</string>
+
+    <!-- Activity workout edit -->
+    <string name="activity_workout_edit_title">Edit workout</string>
+
+</resources>

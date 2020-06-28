@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/content_container"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_view_normal">
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        style="@style/DialogTitle"/>
+
+    <TextView
+        android:id="@+id/dialog_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder"
+        style="@style/DialogText"/>
+
+    <EditText
+        android:id="@+id/input_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/activity_create_week_input_hint_name"
+        android:inputType="textCapSentences"
+        android:layout_margin="@dimen/padding_view_normal"
+        style="@style/Input"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/padding_view_normal">
+
+        <Button
+            android:id="@+id/button_cancel"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/cancel"
+            android:layout_marginStart="@dimen/padding_view_normal"
+            android:layout_marginEnd="@dimen/padding_view_small"
+            style="@style/ButtonDark"/>
+
+        <Button
+            android:id="@+id/button_ok"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/ok"
+            android:layout_marginStart="@dimen/padding_view_small"
+            android:layout_marginEnd="@dimen/padding_view_normal"
+            style="@style/ButtonBlue"/>
+
+    </LinearLayout>
+
+</LinearLayout>

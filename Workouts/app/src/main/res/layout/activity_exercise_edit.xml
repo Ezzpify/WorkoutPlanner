@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_view_large">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_exercise_edit_title"
+            style="@style/PageTitle"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="@dimen/rounded_value_normal"
+            android:layout_marginTop="@dimen/padding_view_large">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onSelectImageClicked">
+
+                <ImageView
+                    android:id="@+id/exercise_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/default_workout_image"
+                    android:foreground="@drawable/image_overlay"/>
+
+                <LinearLayout
+                    android:id="@+id/exercise_image_overlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerInParent="true">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        app:srcCompat="@drawable/ic_photo_size_select_actual_black_24dp"
+                        android:layout_gravity="center_horizontal"
+                        android:tint="@color/white"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_exercise_edit_change_photo"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size_big"
+                        android:textColor="@color/white"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <EditText
+            android:id="@+id/exercise_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/activity_create_exercise_input_hint_name"
+            android:inputType="textCapSentences"
+            android:layout_marginTop="@dimen/padding_view_normal"
+            android:nextFocusDown="@+id/exercise_description"
+            style="@style/Input"/>
+
+        <AutoCompleteTextView
+            android:id="@+id/exercise_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/activity_create_exercise_input_tag_desc"
+            android:inputType="textCapSentences"
+            android:layout_marginTop="@dimen/padding_view_normal"
+            android:nextFocusDown="@+id/exercise_description"
+            android:imeOptions="actionNext"
+            style="@style/Input"/>
+
+        <EditText
+            android:id="@+id/exercise_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/activity_create_exercise_input_hint_desc"
+            android:inputType="textCapSentences"
+            android:layout_marginTop="@dimen/padding_view_normal"
+            android:nextFocusDown="@+id/exercise_weight"
+            style="@style/Input"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/exercise_weight"
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
+                android:layout_height="wrap_content"
+                android:hint="@string/activity_create_exercise_input_hint_weight"
+                android:inputType="numberDecimal"
+                android:layout_marginTop="@dimen/padding_view_normal"
+                android:layout_marginEnd="@dimen/padding_view_small"
+                android:nextFocusDown="@+id/exercise_weight_unit"
+                style="@style/Input"/>
+
+            <EditText
+                android:id="@+id/exercise_weight_unit"
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="wrap_content"
+                android:hint="@string/activity_create_exercise_input_hint_weight_unit"
+                android:inputType="text"
+                android:layout_marginTop="@dimen/padding_view_normal"
+                android:layout_marginStart="@dimen/padding_view_small"
+                android:nextFocusDown="@+id/exercise_weight_reps"
+                style="@style/Input"
+                tools:ignore="TextFields" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/padding_view_normal">
+
+            <EditText
+                android:id="@+id/exercise_weight_reps"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:hint="@string/activity_create_exercise_input_hint_reps"
+                android:inputType="number"
+                android:layout_marginEnd="@dimen/padding_view_small"
+                android:nextFocusDown="@+id/exercise_sets"
+                style="@style/Input"/>
+
+            <EditText
+                android:id="@+id/exercise_sets"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:hint="@string/activity_create_exercise_input_hint_sets"
+                android:inputType="number"
+                android:layout_marginStart="@dimen/padding_view_small"
+                style="@style/Input"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/padding_view_large">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/activity_exercise_edit_create_deload"
+                android:layout_marginEnd="@dimen/padding_view_normal"
+                android:onClick="onCreateDeloadButtonClicked"
+                style="@style/ButtonBlue"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/save"
+                android:layout_marginStart="@dimen/padding_view_normal"
+                android:onClick="onSaveButtonClicked"
+                style="@style/ButtonDark"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBackground">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_view_large">
+
+            <TextView
+                android:id="@+id/exercise_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                style="@style/PageTitle"/>
+
+            <TextView
+                android:id="@+id/exercise_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_description"
+                style="@style/PageSubtitle"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_view_large">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="@dimen/card_view_elevation"
+                    app:cardCornerRadius="@dimen/rounded_value_normal"
+                    android:layout_margin="@dimen/card_view_margin">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/exercise_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            app:srcCompat="@drawable/default_workout_image"
+                            android:scaleType="centerCrop"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/padding_view_small"
+                android:layout_marginBottom="@dimen/padding_view_american">
+
+                <LinearLayout
+                    android:id="@+id/weight_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_view_small">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="@dimen/card_view_elevation"
+                        app:cardCornerRadius="@dimen/rounded_value_normal"
+                        android:layout_margin="@dimen/card_view_margin">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/padding_view_small"
+                            android:paddingBottom="@dimen/padding_view_small"
+                            android:paddingStart="@dimen/padding_view_normal"
+                            android:paddingEnd="@dimen/padding_view_normal">
+
+                            <TextView
+                                android:id="@+id/exercise_weight"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/activity_workout_start_weight_format"
+                                android:textAllCaps="true"
+                                android:layout_toStartOf="@+id/update_weight_button"
+                                android:layout_marginEnd="@dimen/padding_view_large"
+                                android:drawableStart="@drawable/ic_weight_24dp"
+                                android:drawablePadding="@dimen/padding_view_small"
+                                android:layout_centerVertical="true"
+                                style="@style/PageSubtitleBold"/>
+
+                            <Button
+                                android:id="@+id/update_weight_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:text="@string/activity_workout_start_update_weight"
+                                android:onClick="onUpdateWeightButtonClicked"
+                                style="@style/ButtonRedRounded"/>
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/info_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="@dimen/card_view_elevation"
+                        app:cardCornerRadius="@dimen/rounded_value_normal"
+                        android:layout_margin="@dimen/card_view_margin">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_view_normal"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/exercise_reps"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/activity_workout_start_reps_format"
+                                android:textAllCaps="true"
+                                android:layout_marginBottom="@dimen/padding_view_tiny"
+                                style="@style/PageSubtitleBold"/>
+
+                            <TextView
+                                android:id="@+id/exercise_sets"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/activity_workout_start_sets_format"
+                                android:textAllCaps="true"
+                                style="@style/PageSubtitleBold"/>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/padding_view_normal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/padding_view_large">
+
+            <Button
+                android:id="@+id/previous_exercise_button"
+                android:layout_width="0dp"
+                android:layout_weight="0.35"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/previous"
+                android:layout_marginEnd="@dimen/padding_view_large"
+                android:visibility="gone"
+                android:onClick="onPreviousExerciseButtonClicked"
+                style="@style/ButtonDark"/>
+
+            <Button
+                android:id="@+id/next_exercise_button"
+                android:layout_width="0dp"
+                android:layout_weight="0.65"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/activity_workout_start_next_exercise"
+                android:onClick="onNextExerciseButtonClicked"
+                style="@style/ButtonBlue"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,160 @@
+<com.casper.workouts.custom.SwipeRevealLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:background="@color/colorBackground"
+    app:dragFromEdge="right">
+
+    <!-- Actions layout -->
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/edit"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/ic_edit_black_24dp"
+                android:padding="@dimen/padding_view_small"
+                android:background="@drawable/button_blue"
+                android:scaleType="fitCenter"
+                android:layout_margin="@dimen/padding_view_small"
+                android:tint="@color/white"/>
+
+            <ImageButton
+                android:id="@+id/delete"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/ic_delete_black_24dp"
+                android:padding="@dimen/padding_view_small"
+                android:background="@drawable/button_red"
+                android:scaleType="fitCenter"
+                android:layout_margin="@dimen/padding_view_small"
+                android:tint="@color/white"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!-- Main layout -->
+    <FrameLayout
+        android:id="@+id/main_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:clickable="true">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/card_view_elevation"
+            app:cardCornerRadius="@dimen/rounded_value_normal"
+            android:layout_margin="@dimen/card_view_margin">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/image"
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp"
+                        app:srcCompat="@drawable/default_workout_image"
+                        android:scaleType="centerCrop"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/padding_view_small"
+                        android:layout_marginStart="@dimen/padding_view_small">
+
+                        <TextView
+                            android:id="@+id/exercise_tag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/placeholder"
+                            android:textStyle="bold"
+                            android:layout_gravity="end"
+                            style="@style/TextTagBlue"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="@dimen/padding_view_small"
+                        android:layout_marginEnd="@dimen/padding_view_small">
+
+                        <TextView
+                            android:id="@+id/exercise_weight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/placeholder"
+                            android:textStyle="bold"
+                            android:layout_gravity="end"
+                            style="@style/TextTag"/>
+
+                        <TextView
+                            android:id="@+id/exercise_reps_sets"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/placeholder"
+                            android:layout_marginTop="@dimen/padding_view_tiny"
+                            android:layout_gravity="end"
+                            style="@style/TextTag"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_view_normal">
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/placeholder"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size_big"/>
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/no_description"
+                        android:textColor="@color/colorTextGray"
+                        android:textSize="@dimen/text_size_medium"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </FrameLayout>
+
+</com.casper.workouts.custom.SwipeRevealLayout>
