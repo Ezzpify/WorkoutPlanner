@@ -4,16 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.casper.workouts.room.dao.DayDao
 import com.casper.workouts.room.dao.ExerciseDao
 import com.casper.workouts.room.dao.WeekDao
 import com.casper.workouts.room.dao.WorkoutDao
 import com.casper.workouts.room.models.*
-import com.casper.workouts.room.models.day.DayExerciseCrossRef
+import com.casper.workouts.room.models.dayjunctions.DayExerciseCrossRef
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @Database(entities = [Workout::class, Week::class, Day::class, Exercise::class, DayExerciseCrossRef::class], exportSchema = false, version = 1)
 abstract class MyDatabase : RoomDatabase() {

@@ -2,10 +2,9 @@ package com.casper.workouts.room.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.casper.workouts.room.models.Day
 import com.casper.workouts.room.models.Exercise
-import com.casper.workouts.room.models.day.DayExerciseCrossRef
-import com.casper.workouts.room.models.day.DayWithExercises
+import com.casper.workouts.room.models.dayjunctions.DayExerciseCrossRef
+import com.casper.workouts.room.models.dayjunctions.DayWithExercises
 
 @Dao
 interface ExerciseDao {
@@ -24,6 +23,9 @@ interface ExerciseDao {
 
     @Update
     fun update(exercises: List<Exercise>)
+
+    @Update
+    fun updateExtras(exerciseExtras: List<DayExerciseCrossRef>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(exercise: Exercise): Long

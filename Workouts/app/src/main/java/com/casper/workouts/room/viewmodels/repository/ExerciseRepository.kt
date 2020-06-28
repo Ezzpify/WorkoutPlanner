@@ -1,14 +1,11 @@
 package com.casper.workouts.room.viewmodels.repository
 
-import android.util.Log
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
-import com.casper.workouts.room.dao.DayDao
 import com.casper.workouts.room.dao.ExerciseDao
-import com.casper.workouts.room.models.Day
 import com.casper.workouts.room.models.Exercise
-import com.casper.workouts.room.models.day.DayExerciseCrossRef
-import com.casper.workouts.room.models.day.DayWithExercises
+import com.casper.workouts.room.models.dayjunctions.DayExerciseCrossRef
+import com.casper.workouts.room.models.dayjunctions.DayWithExercises
 
 class ExerciseRepository(private val exerciseDao: ExerciseDao) {
     val allExercises: LiveData<List<Exercise>> = exerciseDao.getAllExercises()
@@ -32,6 +29,11 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
     @WorkerThread
     suspend fun update(exercises: List<Exercise>) {
         exerciseDao.update(exercises)
+    }
+
+    @WorkerThread
+    suspend fun updateExtras(exerciseExtras: List<DayExerciseCrossRef>) {
+        exerciseDao.updateExtras(exerciseExtras)
     }
 
     fun getExercises(dayId: Long) : LiveData<DayWithExercises> {

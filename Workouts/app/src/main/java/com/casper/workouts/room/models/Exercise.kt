@@ -27,6 +27,10 @@ data class Exercise (
 
     @ColumnInfo(name = "LastUpdated") var lastUpdated: Long = System.currentTimeMillis()
 ) : Serializable {
+    // This is set after getting sorting indexes from the junction table
+    @Ignore
+    var sortingIndex: Int = 0
+
     fun updateDate() {
         this.lastUpdated = System.currentTimeMillis()
     }

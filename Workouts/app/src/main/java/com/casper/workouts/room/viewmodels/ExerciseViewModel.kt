@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.casper.workouts.room.MyDatabase
 import com.casper.workouts.room.models.Exercise
-import com.casper.workouts.room.models.day.DayExerciseCrossRef
-import com.casper.workouts.room.models.day.DayWithExercises
+import com.casper.workouts.room.models.dayjunctions.DayExerciseCrossRef
+import com.casper.workouts.room.models.dayjunctions.DayWithExercises
 import com.casper.workouts.room.viewmodels.repository.ExerciseRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,6 +40,10 @@ class ExerciseViewModel(application: Application) : AndroidViewModel(application
 
     fun update(exercises: List<Exercise>) = viewModelScope.launch(Dispatchers.IO) {
         repository.update(exercises)
+    }
+
+    fun updateExtras(exerciseExtras: List<DayExerciseCrossRef>) = viewModelScope.launch(Dispatchers.IO) {
+        repository.updateExtras(exerciseExtras)
     }
 
     fun getExercises(dayId: Long): LiveData<DayWithExercises> {

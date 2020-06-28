@@ -1,7 +1,7 @@
 package com.casper.workouts.room.models
 
 import androidx.room.*
-import com.casper.workouts.room.models.day.DayExerciseCrossRef
+import com.casper.workouts.room.models.dayjunctions.DayExerciseCrossRef
 import java.io.Serializable
 
 data class FullWorkout(
