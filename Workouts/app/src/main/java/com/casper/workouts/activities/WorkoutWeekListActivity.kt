@@ -127,21 +127,25 @@ class WorkoutWeekListActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == RESULT_CREATE_WEEK && resultCode == Activity.RESULT_OK) {
-            data?.let { intent ->
-                // Get all data for week
-                val weekName = intent.getStringExtra(CreateWeekActivity.EXTRA_REPLY_NAME) as String
-                val weekDesc = intent.getStringExtra(CreateWeekActivity.EXTRA_REPLY_DESC)
+        if (requestCode == RESULT_CREATE_WEEK) {
+            if (resultCode == Activity.RESULT_OK) {
+                data?.let { intent ->
+                    // Get all data for week
+                    val weekName = intent.getStringExtra(CreateWeekActivity.EXTRA_REPLY_NAME) as String
+                    val weekDesc = intent.getStringExtra(CreateWeekActivity.EXTRA_REPLY_DESC)
 
-                // Get next sorting index for list
-                var index = 0
-                if (adapter.itemCount > 0) {
-                    index = adapter.getItems().last().sortingIndex + 1
+                    // Get next sorting index for list
+                    var sortingIndex = adapter.itemCount
+
+                    // Create new week object
+                    val week = Week(0, workoutId, sortingIndex, weekName, weekDesc)
+                    weekViewModel.insert(week)
                 }
-
-                // Create new week object
-                val week = Week(0, workoutId, index, weekName, weekDesc)
-                weekViewModel.insert(week)
+            }
+            else {
+                if (adapter.itemCount == 0) {
+                    finish()
+                }
             }
         }
     }

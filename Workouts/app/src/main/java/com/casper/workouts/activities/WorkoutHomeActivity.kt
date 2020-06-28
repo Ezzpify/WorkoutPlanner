@@ -77,11 +77,13 @@ class WorkoutHomeActivity : AppCompatActivity() {
     }
 
     private fun updateWorkout() {
-        val workout = workoutUtils.getWorkout()
-        workout.currentWorkoutWeek = workoutInfo.weekIndex
-        workout.currentWorkoutDay = workoutInfo.dayIndex
-        workout.updateDate()
-        workoutViewModel.update(workout)
+        if (this::workoutUtils.isInitialized) {
+            val workout = workoutUtils.getWorkout()
+            workout.currentWorkoutWeek = workoutInfo.weekIndex
+            workout.currentWorkoutDay = workoutInfo.dayIndex
+            workout.updateDate()
+            workoutViewModel.update(workout)
+        }
     }
 
     fun onEditWorkoutButtonClicked(view: View) {

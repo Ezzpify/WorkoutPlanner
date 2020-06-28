@@ -149,13 +149,10 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 // Get next sorting index for list
-                var index = 0
-                if (adapter.itemCount > 0) {
-                    index = adapter.getItems().last().sortingIndex + 1
-                }
+                var sortingIndex = adapter.itemCount
 
                 // Insert workout into db
-                val workout = Workout(0, index, workoutName, workoutDesc, workoutImageName, 0, 0, 0)
+                val workout = Workout(0, sortingIndex, workoutName, workoutDesc, workoutImageName, 0, 0, 0)
                 workoutViewModel.insert(workout)
             }
         }

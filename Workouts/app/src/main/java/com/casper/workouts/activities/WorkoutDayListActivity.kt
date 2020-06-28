@@ -127,21 +127,25 @@ class WorkoutDayListActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == RESULT_CREATE_DAY && resultCode == Activity.RESULT_OK) {
-            data?.let { intent ->
-                // Get all data for week
-                val dayName = intent.getStringExtra(CreateDayActivity.EXTRA_REPLY_NAME) as String
-                val dayDescription = intent.getStringExtra(CreateDayActivity.EXTRA_REPLY_DESC) as String
+        if (requestCode == RESULT_CREATE_DAY) {
+            if (resultCode == Activity.RESULT_OK) {
+                data?.let { intent ->
+                    // Get all data for week
+                    val dayName = intent.getStringExtra(CreateDayActivity.EXTRA_REPLY_NAME) as String
+                    val dayDescription = intent.getStringExtra(CreateDayActivity.EXTRA_REPLY_DESC) as String
 
-                // Get next sorting index for list
-                var index = 0
-                if (adapter.itemCount > 0) {
-                    index = adapter.getItems().last().sortingIndex + 1
+                    // Get next sorting index for list
+                    var sortingIndex = adapter.itemCount
+
+                    // Create new day object
+                    val day = Day(0, weekId, sortingIndex, dayName, dayDescription)
+                    dayViewModel.insert(day)
                 }
-
-                // Create new day object
-                val day = Day(0, weekId, index, dayName, dayDescription)
-                dayViewModel.insert(day)
+            }
+            else {
+                if (adapter.itemCount == 0) {
+                    finish()
+                }
             }
         }
     }
