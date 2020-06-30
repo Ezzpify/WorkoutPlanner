@@ -157,6 +157,11 @@ class WorkoutStartActivity: AppCompatActivity() {
             InputType.TYPE_CLASS_NUMBER,
             object: InputDialogCallback {
                 override fun result(value: String) {
+                    // If new value is same as old then we don't need to change anything
+                    if (currentExercise.weight.toString() == value) {
+                        return
+                    }
+
                     val newValue = value.toDouble()
                     currentExercise.weight = newValue
                     currentExercise.updateDate()

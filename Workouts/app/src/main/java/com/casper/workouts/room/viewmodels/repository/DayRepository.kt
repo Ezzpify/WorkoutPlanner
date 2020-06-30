@@ -28,4 +28,9 @@ class DayRepository(private val dayDao: DayDao) {
     suspend fun update(days: List<Day>) {
         dayDao.update(days)
     }
+
+    @WorkerThread
+    suspend fun delete(day: Day) {
+        dayDao.delete(day)
+    }
 }

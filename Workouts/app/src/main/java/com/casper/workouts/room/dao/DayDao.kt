@@ -21,4 +21,7 @@ interface DayDao {
 
     @Update
     fun update(days: List<Day>)
+
+    @Delete
+    fun delete(day: Day)
 }

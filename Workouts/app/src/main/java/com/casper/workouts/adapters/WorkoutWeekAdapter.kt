@@ -8,13 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.casper.workouts.R
 import com.casper.workouts.activities.EditWeekActivity
 import com.casper.workouts.activities.WorkoutDayListActivity
+import com.casper.workouts.callbacks.DeleteItemCallback
+import com.casper.workouts.callbacks.OptionDialogCallback
 import com.casper.workouts.custom.inflate
+import com.casper.workouts.dialogs.OptionDialog
 import com.casper.workouts.room.models.Week
 import com.casper.workouts.room.viewmodels.WeekViewModel
 import kotlinx.android.synthetic.main.adapter_workout_week_item.view.*
 import java.util.*
 
-class WorkoutWeekAdapter() : RecyclerView.Adapter<WorkoutWeekAdapter.WeekHolder>() {
+class WorkoutWeekAdapter(private val callback: DeleteItemCallback) : RecyclerView.Adapter<WorkoutWeekAdapter.WeekHolder>() {
     var itemPositionsChanged = false
 
     private var items = emptyList<Week>()
@@ -55,18 +58,12 @@ class WorkoutWeekAdapter() : RecyclerView.Adapter<WorkoutWeekAdapter.WeekHolder>
         return true
     }
 
-    class WeekHolder(v: View) : RecyclerView.ViewHolder(v) {
+    inner class WeekHolder(v: View) : RecyclerView.ViewHolder(v) {
         private var view: View = v
         private var item: Week? = null
 
         init {
 
-        }
-
-        companion object {
-            const val EXTRA_WEEK_UID = "EXTRA_UID"
-            const val EXTRA_WEEK_NAME = "EXTRA_NAME"
-            const val EXTRA_WEEK_WEEK = "EXTRA_WEEK"
         }
 
         fun bindWeek(week: Week) {
@@ -92,9 +89,27 @@ class WorkoutWeekAdapter() : RecyclerView.Adapter<WorkoutWeekAdapter.WeekHolder>
                 val intent = Intent(context, EditWeekActivity::class.java)
                 intent.putExtra(EXTRA_WEEK_WEEK, item)
                 context.startActivity(intent)
+
+                view.swipe_layout.close(false)
             }
             view.delete.setOnClickListener {
+                val context = view.context
+                OptionDialog(context,
+                    context.getString(R.string.delete),
+                    context.getString(R.string.general_dialog_delete_item_desc, week.name),
+                    context.getString(R.string.cancel),
+                    context.getString(R.string.yes),
+                    object: OptionDialogCallback {
+                        override fun optionOneClicked() {
+                            // No - do nothing
+                        }
 
+                        override fun optionTwoClicked() {
+                            callback.onDeleted(week)
+                        }
+                    }).show()
+
+                view.swipe_layout.close(true)
             }
         }
 
@@ -108,5 +123,11 @@ class WorkoutWeekAdapter() : RecyclerView.Adapter<WorkoutWeekAdapter.WeekHolder>
 
             view.description.text = itemView.context.getString(R.string.no_description)
         }
+    }
+
+    companion object {
+        const val EXTRA_WEEK_UID = "EXTRA_UID"
+        const val EXTRA_WEEK_NAME = "EXTRA_NAME"
+        const val EXTRA_WEEK_WEEK = "EXTRA_WEEK"
     }
 }

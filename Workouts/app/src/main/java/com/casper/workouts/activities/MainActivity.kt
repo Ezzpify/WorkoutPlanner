@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casper.workouts.R
 import com.casper.workouts.adapters.WorkoutListAdapter
+import com.casper.workouts.callbacks.DeleteItemCallback
 import com.casper.workouts.custom.ListItemDecoration
 import com.casper.workouts.data.UserData
 import com.casper.workouts.room.models.Workout
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DeleteItemCallback {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: WorkoutListAdapter
     private lateinit var workoutViewModel: WorkoutViewModel
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         linearLayoutManager = LinearLayoutManager(this)
         workout_list.layoutManager = linearLayoutManager
-        adapter = WorkoutListAdapter()
+        adapter = WorkoutListAdapter(this)
         workout_list.adapter = adapter
         workout_list.addItemDecoration(ListItemDecoration(resources.getDimension(R.dimen.list_item_spacing).toInt()))
 
@@ -155,6 +156,12 @@ class MainActivity : AppCompatActivity() {
                 val workout = Workout(0, sortingIndex, workoutName, workoutDesc, workoutImageName, 0, 0, 0)
                 workoutViewModel.insert(workout)
             }
+        }
+    }
+
+    override fun onDeleted(item: Any) {
+        if (item is Workout) {
+            workoutViewModel.delete(item)
         }
     }
 

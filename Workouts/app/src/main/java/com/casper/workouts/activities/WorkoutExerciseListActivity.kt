@@ -16,6 +16,7 @@ import com.casper.workouts.R
 import com.casper.workouts.activities.ExercisesSearchActivity.Companion.EXTRA_REPLY_EXERCISE
 import com.casper.workouts.adapters.WorkoutDayAdapter
 import com.casper.workouts.adapters.WorkoutExerciseAdapter
+import com.casper.workouts.callbacks.DeleteItemCallback
 import com.casper.workouts.callbacks.OptionDialogCallback
 import com.casper.workouts.custom.ListItemDecoration
 import com.casper.workouts.dialogs.ErrorDialog
@@ -28,7 +29,7 @@ import com.casper.workouts.utils.FileUtils
 import kotlinx.android.synthetic.main.activity_workout_exercises_list.*
 import kotlinx.coroutines.launch
 
-class WorkoutExerciseListActivity : AppCompatActivity() {
+class WorkoutExerciseListActivity : AppCompatActivity(), DeleteItemCallback {
     private var dayId: Long = -1L;
     private var dayName: String? = null
 
@@ -43,8 +44,8 @@ class WorkoutExerciseListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_workout_exercises_list)
 
         // Get all intent data for week
-        dayName = intent.getStringExtra(WorkoutDayAdapter.DayHolder.EXTRA_DAY_NAME)
-        dayId = intent.getLongExtra(WorkoutDayAdapter.DayHolder.EXTRA_DAY_UID, -1L)
+        dayName = intent.getStringExtra(WorkoutDayAdapter.EXTRA_DAY_NAME)
+        dayId = intent.getLongExtra(WorkoutDayAdapter.EXTRA_DAY_UID, -1L)
         if (dayId == -1L) {
             ErrorDialog(this, getString(R.string.error), getString(R.string.general_error_oops)).show()
         }
@@ -55,7 +56,7 @@ class WorkoutExerciseListActivity : AppCompatActivity() {
         // Set up recyclerview for displaying days
         linearLayoutManager = LinearLayoutManager(this)
         exercises_list.layoutManager = linearLayoutManager
-        adapter = WorkoutExerciseAdapter()
+        adapter = WorkoutExerciseAdapter(this)
         exercises_list.adapter = adapter
         exercises_list.addItemDecoration(ListItemDecoration(resources.getDimension(R.dimen.list_item_spacing).toInt()))
 
@@ -214,6 +215,12 @@ class WorkoutExerciseListActivity : AppCompatActivity() {
                 val relation = DayExerciseCrossRef(dayId, exercise.exerciseId, sortingIndex)
                 exerciseViewModel.insert(relation)
             }
+        }
+    }
+
+    override fun onDeleted(item: Any) {
+        if (item is Exercise) {
+            exerciseViewModel.deleteJunction(dayId, item.exerciseId)
         }
     }
 

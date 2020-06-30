@@ -9,8 +9,11 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.casper.workouts.R
 import com.casper.workouts.activities.EditExerciseActivity
+import com.casper.workouts.callbacks.DeleteItemCallback
+import com.casper.workouts.callbacks.OptionDialogCallback
 import com.casper.workouts.callbacks.SearchExerciseSelectedCallback
 import com.casper.workouts.custom.inflate
+import com.casper.workouts.dialogs.OptionDialog
 import com.casper.workouts.room.models.Exercise
 import com.casper.workouts.utils.FileUtils
 import com.squareup.picasso.Picasso
@@ -21,14 +24,25 @@ import kotlinx.android.synthetic.main.adapter_workout_exercise_item.view.title
 import java.util.*
 import kotlin.collections.ArrayList
 
-class WorkoutExerciseAdapter(private val selectedCallback: SearchExerciseSelectedCallback? = null) : RecyclerView.Adapter<WorkoutExerciseAdapter.ExerciseHolder>(),
+class WorkoutExerciseAdapter() : RecyclerView.Adapter<WorkoutExerciseAdapter.ExerciseHolder>(),
     Filterable {
+    private var selectedItemCallback: SearchExerciseSelectedCallback? = null
+    private var deleteItemCallback: DeleteItemCallback? = null
+
     var itemPositionsChanged = false
 
     private var items = emptyList<Exercise>()
     private var filteredItems = emptyList<Exercise>()
 
     private val filter = ExerciseFilter()
+
+    constructor(selectedCallback: SearchExerciseSelectedCallback) : this() {
+        selectedItemCallback = selectedCallback
+    }
+
+    constructor(callback: DeleteItemCallback) : this() {
+        deleteItemCallback = callback
+    }
 
     override fun getFilter(): Filter {
         return filter
@@ -103,10 +117,8 @@ class WorkoutExerciseAdapter(private val selectedCallback: SearchExerciseSelecte
 
             // Front view click listener
             view.main_item.setOnClickListener {
-                if (selectedCallback != null) {
-                    item?.let {
-                        selectedCallback.onExerciseSelected(it)
-                    }
+                item?.let {
+                    selectedItemCallback?.onExerciseSelected(it)
                 }
             }
 
@@ -116,9 +128,27 @@ class WorkoutExerciseAdapter(private val selectedCallback: SearchExerciseSelecte
                 val intent = Intent(context, EditExerciseActivity::class.java)
                 intent.putExtra(EXTRA_EXERCISE, item)
                 context.startActivity(intent)
+
+                view.swipe_layout.close(false)
             }
             view.delete.setOnClickListener {
+                val context = view.context
+                OptionDialog(context,
+                    context.getString(R.string.delete),
+                    context.getString(R.string.activity_workout_exercise_delete_workout_dialog_desc, exercise.name),
+                    context.getString(R.string.cancel),
+                    context.getString(R.string.yes),
+                    object: OptionDialogCallback {
+                        override fun optionOneClicked() {
+                            // No - do nothing
+                        }
 
+                        override fun optionTwoClicked() {
+                            deleteItemCallback?.onDeleted(exercise)
+                        }
+                    }).show()
+
+                view.swipe_layout.close(true)
             }
         }
 

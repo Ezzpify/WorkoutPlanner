@@ -4,7 +4,12 @@ import androidx.room.*
 import java.io.Serializable
 import java.sql.Date
 
-@Entity(tableName = "Weeks", indices = [Index("WeekID")])
+@Entity(tableName = "Weeks",
+    foreignKeys = [ForeignKey(entity = Workout::class,
+        parentColumns = arrayOf("WorkoutID"),
+        childColumns = arrayOf("WorkoutID"),
+        onDelete = ForeignKey.CASCADE)],
+    indices = [Index("WeekID")])
 data class Week (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "WeekID") val weekId: Long,

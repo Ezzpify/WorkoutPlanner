@@ -11,7 +11,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.casper.workouts.R
-import com.casper.workouts.adapters.WorkoutListAdapter.WorkoutHolder.Companion.EXTRA_WORKOUT_WORKOUT
+import com.casper.workouts.adapters.WorkoutListAdapter.Companion.EXTRA_WORKOUT_WORKOUT
 import com.casper.workouts.custom.getFilePath
 import com.casper.workouts.custom.loadUrl
 import com.casper.workouts.room.models.Workout

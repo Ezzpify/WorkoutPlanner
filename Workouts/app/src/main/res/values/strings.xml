@@ -16,9 +16,14 @@
     <string name="no_description">No description</string>
     <string name="delete">Delete</string>
     <string name="never">Never</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <!-- General errors -->
     <string name="general_error_oops">Something broke horribly.</string>
+
+    <!-- General dialogs -->
+    <string name="general_dialog_delete_item_desc">Are you sure you want to delete %1$s?</string>
 
     <!-- Activity main -->
     <string name="activity_main_title">Select your workout</string>
@@ -64,13 +69,14 @@
     <string name="activity_workout_exercise_add_dialog_option_one">Existing</string>
     <string name="activity_workout_exercise_add_dialog_option_two">New</string>
     <string name="activity_workout_exercise_already_exists_error">This exercise is already added.</string>
+    <string name="activity_workout_exercise_delete_workout_dialog_desc">Deleting exercise %1$s will only remove it from this day.\n\nYou can always re-add this exercise again, or add it to another day.</string>
 
     <!-- Activity create exercise -->
     <string name="activity_create_exercise_title">Create exercise</string>
     <string name="activity_create_exercise_select_photo">Select photo</string>
     <string name="activity_create_exercise_input_hint_name">* Exercise name</string>
     <string name="activity_create_exercise_input_hint_desc">Exercise description</string>
-    <string name="activity_create_exercise_input_tag_desc">* Exercise tag</string>
+    <string name="activity_create_exercise_input_tag_desc">* Exercise tag (Chest, bicep, …)</string>
     <string name="activity_create_exercise_input_hint_weight">Current weight</string>
     <string name="activity_create_exercise_input_hint_weight_unit">Unit</string>
     <string name="activity_create_exercise_input_hint_sets">Number of sets</string>
@@ -94,6 +100,8 @@
     <string name="activity_exercise_edit_title">Edit exercise</string>
     <string name="activity_exercise_edit_change_photo">Change photo</string>
     <string name="activity_exercise_edit_create_deload">Deload version</string>
+    <string name="activity_exercise_edit_create_deload_dialog_title">Create deload version</string>
+    <string name="activity_exercise_edit_create_deload_dialog_desc">Enter the percentage you want of the original exercise weight.\n\nExample: If bench press is 100KG, a deload at 70% would be 70KG.</string>
 
     <!-- Activity day edit -->
     <string name="activity_day_edit_title">Edit day</string>

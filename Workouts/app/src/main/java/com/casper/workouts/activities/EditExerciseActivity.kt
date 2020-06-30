@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
@@ -14,9 +15,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.casper.workouts.R
 import com.casper.workouts.adapters.WorkoutExerciseAdapter.Companion.EXTRA_EXERCISE
+import com.casper.workouts.callbacks.InputDialogCallback
 import com.casper.workouts.custom.getFilePath
 import com.casper.workouts.custom.loadUrl
 import com.casper.workouts.data.UserData
+import com.casper.workouts.dialogs.InputDialog
+import com.casper.workouts.room.models.DeloadExercise
 import com.casper.workouts.room.models.Exercise
 import com.casper.workouts.room.viewmodels.ExerciseViewModel
 import com.casper.workouts.utils.FileUtils
@@ -25,7 +29,6 @@ import kotlinx.android.synthetic.main.activity_exercise_edit.*
 
 class EditExerciseActivity : AppCompatActivity() {
     private lateinit var exercise: Exercise
-
     private lateinit var exerciseViewModel: ExerciseViewModel
 
     private var exerciseImagePath: String? = null
@@ -41,10 +44,12 @@ class EditExerciseActivity : AppCompatActivity() {
         exercise_name.setText(exercise.name)
         exercise_tag.setText(exercise.tag)
         exercise_description.setText(exercise.description)
-        exercise_weight.setText(exercise.weight.toString())
         exercise_weight_unit.setText(exercise.weightUnit)
-        exercise_weight_reps.setText(exercise.reps.toString())
-        exercise_sets.setText(exercise.sets.toString())
+
+        exercise.weight?.let { exercise_weight.setText(it.toString()) }
+        exercise.reps?.let { exercise_weight_reps.setText(it.toString()) }
+        exercise.sets?.let { exercise_sets.setText(it.toString()) }
+
         exercise.imageName?.let {
             if (it.isNotEmpty()) {
                 FileUtils().getWorkoutImage(this, it)?.let { image ->
@@ -65,7 +70,20 @@ class EditExerciseActivity : AppCompatActivity() {
     }
 
     fun onCreateDeloadButtonClicked(view: View) {
-        TODO("IMPLEMENT THIS RETARD")
+        InputDialog(this,
+            getString(R.string.activity_exercise_edit_create_deload_dialog_title),
+            getString(R.string.activity_exercise_edit_create_deload_dialog_desc),
+            "70",
+            InputType.TYPE_CLASS_NUMBER,
+            object: InputDialogCallback {
+                override fun result(value: String) {
+                    value.toDoubleOrNull()?.let {
+                        // Create new deload exercise object
+                        //val deloadExercise = DeloadExercise(exercise.exerciseId, it)
+                        //exerciseViewModel.insert(deloadExercise)
+                    }
+                }
+            }).show()
     }
 
     fun onSaveButtonClicked(view: View) {

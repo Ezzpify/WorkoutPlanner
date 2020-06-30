@@ -14,13 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.casper.workouts.R
 import com.casper.workouts.adapters.WorkoutDayAdapter
 import com.casper.workouts.adapters.WorkoutWeekAdapter
+import com.casper.workouts.callbacks.DeleteItemCallback
 import com.casper.workouts.custom.ListItemDecoration
 import com.casper.workouts.dialogs.ErrorDialog
 import com.casper.workouts.room.models.Day
 import com.casper.workouts.room.viewmodels.DayViewModel
 import kotlinx.android.synthetic.main.activity_workout_day_list.*
 
-class WorkoutDayListActivity : AppCompatActivity() {
+class WorkoutDayListActivity : AppCompatActivity(), DeleteItemCallback {
     private var weekId: Long = -1L;
     private var weekName: String? = null
 
@@ -33,8 +34,8 @@ class WorkoutDayListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_workout_day_list)
 
         // Get all intent data for week
-        weekName = intent.getStringExtra(WorkoutWeekAdapter.WeekHolder.EXTRA_WEEK_NAME)
-        weekId = intent.getLongExtra(WorkoutWeekAdapter.WeekHolder.EXTRA_WEEK_UID, -1L)
+        weekName = intent.getStringExtra(WorkoutWeekAdapter.EXTRA_WEEK_NAME)
+        weekId = intent.getLongExtra(WorkoutWeekAdapter.EXTRA_WEEK_UID, -1L)
         if (weekId == -1L) {
             ErrorDialog(this, getString(R.string.error), getString(R.string.general_error_oops)).show()
         }
@@ -45,7 +46,7 @@ class WorkoutDayListActivity : AppCompatActivity() {
         // Set up recyclerview for displaying days
         linearLayoutManager = LinearLayoutManager(this)
         day_list.layoutManager = linearLayoutManager
-        adapter = WorkoutDayAdapter()
+        adapter = WorkoutDayAdapter(this)
         day_list.adapter = adapter
         day_list.addItemDecoration(ListItemDecoration(resources.getDimension(R.dimen.list_item_spacing).toInt()))
 
@@ -147,6 +148,12 @@ class WorkoutDayListActivity : AppCompatActivity() {
                     finish()
                 }
             }
+        }
+    }
+
+    override fun onDeleted(item: Any) {
+        if (item is Day) {
+            dayViewModel.delete(item)
         }
     }
 

@@ -18,6 +18,9 @@ interface WeekDao {
     @Update
     fun update(week: Week)
 
+    @Delete
+    fun delete(week: Week)
+
     @Update
     fun update(weeks: List<Week>)
 }

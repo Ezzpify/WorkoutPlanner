@@ -33,6 +33,10 @@ class DayViewModel(application: Application) : AndroidViewModel(application) {
         repository.update(day)
     }
 
+    fun delete(day: Day) = viewModelScope.launch(Dispatchers.IO) {
+        repository.delete(day)
+    }
+
     fun update(days: List<Day>) = viewModelScope.launch(Dispatchers.IO) {
         repository.update(days)
     }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casper.workouts.R
 import com.casper.workouts.adapters.WorkoutWeekAdapter
+import com.casper.workouts.callbacks.DeleteItemCallback
 import com.casper.workouts.custom.ListItemDecoration
 import com.casper.workouts.dialogs.ErrorDialog
 import com.casper.workouts.room.models.Week
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_workout_week_list.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class WorkoutWeekListActivity : AppCompatActivity() {
+class WorkoutWeekListActivity : AppCompatActivity(), DeleteItemCallback {
     private var workoutId: Long = -1L;
     private var workoutName: String? = null
 
@@ -45,7 +46,7 @@ class WorkoutWeekListActivity : AppCompatActivity() {
         // Set up recyclerview for displaying weeks
         linearLayoutManager = LinearLayoutManager(this)
         week_list.layoutManager = linearLayoutManager
-        adapter = WorkoutWeekAdapter()
+        adapter = WorkoutWeekAdapter(this)
         week_list.adapter = adapter
         week_list.addItemDecoration(ListItemDecoration(resources.getDimension(R.dimen.list_item_spacing).toInt()))
 
@@ -147,6 +148,12 @@ class WorkoutWeekListActivity : AppCompatActivity() {
                     finish()
                 }
             }
+        }
+    }
+
+    override fun onDeleted(item: Any) {
+        if (item is Week) {
+            weekViewModel.delete(item)
         }
     }
 

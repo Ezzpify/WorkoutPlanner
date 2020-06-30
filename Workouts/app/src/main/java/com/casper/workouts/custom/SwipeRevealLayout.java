@@ -479,7 +479,8 @@ public class SwipeRevealLayout extends ViewGroup {
     }
 
     private boolean couldBecomeClick(MotionEvent ev) {
-        return isInMainView(ev) && !shouldInitiateADrag();
+        //return isInMainView(ev) && !shouldInitiateADrag();
+        return !isInMainView(ev) && !shouldInitiateADrag();
     }
 
     private boolean isInMainView(MotionEvent ev) {

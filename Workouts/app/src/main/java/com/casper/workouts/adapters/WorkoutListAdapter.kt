@@ -7,14 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.casper.workouts.R
 import com.casper.workouts.activities.EditWorkoutActivity
 import com.casper.workouts.activities.WorkoutHomeActivity
+import com.casper.workouts.callbacks.DeleteItemCallback
+import com.casper.workouts.callbacks.OptionDialogCallback
 import com.casper.workouts.room.models.Workout
 import com.casper.workouts.custom.inflate
+import com.casper.workouts.dialogs.OptionDialog
 import com.casper.workouts.utils.FileUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_workout_list_item.view.*
 import java.util.*
 
-class WorkoutListAdapter() : RecyclerView.Adapter<WorkoutListAdapter.WorkoutHolder>() {
+class WorkoutListAdapter(private val callback: DeleteItemCallback) : RecyclerView.Adapter<WorkoutListAdapter.WorkoutHolder>() {
     var itemPositionsChanged = false
 
     private var items = emptyList<Workout>()
@@ -55,18 +58,12 @@ class WorkoutListAdapter() : RecyclerView.Adapter<WorkoutListAdapter.WorkoutHold
         return true
     }
 
-    class WorkoutHolder(v: View) : RecyclerView.ViewHolder(v) {
+    inner class WorkoutHolder(v: View) : RecyclerView.ViewHolder(v) {
         private var view: View = v
         private var item: Workout? = null
 
         init {
 
-        }
-
-        companion object {
-            const val EXTRA_WORKOUT_UID = "EXTRA_UID"
-            const val EXTRA_WORKOUT_NAME = "EXTRA_NAME"
-            const val EXTRA_WORKOUT_WORKOUT = "EXTRA_WORKOUT"
         }
 
         fun bindWorkout(workout: Workout) {
@@ -101,9 +98,27 @@ class WorkoutListAdapter() : RecyclerView.Adapter<WorkoutListAdapter.WorkoutHold
                 val intent = Intent(context, EditWorkoutActivity::class.java)
                 intent.putExtra(EXTRA_WORKOUT_WORKOUT, item)
                 context.startActivity(intent)
+
+                view.swipe_layout.close(false)
             }
             view.delete.setOnClickListener {
+                val context = view.context
+                OptionDialog(context,
+                    context.getString(R.string.delete),
+                    context.getString(R.string.general_dialog_delete_item_desc, workout.name),
+                    context.getString(R.string.cancel),
+                    context.getString(R.string.yes),
+                    object: OptionDialogCallback {
+                        override fun optionOneClicked() {
+                            // No - do nothing
+                        }
 
+                        override fun optionTwoClicked() {
+                            callback.onDeleted(workout)
+                        }
+                    }).show()
+
+                view.swipe_layout.close(true)
             }
         }
 
@@ -117,5 +132,11 @@ class WorkoutListAdapter() : RecyclerView.Adapter<WorkoutListAdapter.WorkoutHold
 
             view.description.text = itemView.context.getString(R.string.no_description)
         }
+    }
+
+    companion object {
+        const val EXTRA_WORKOUT_UID = "EXTRA_UID"
+        const val EXTRA_WORKOUT_NAME = "EXTRA_NAME"
+        const val EXTRA_WORKOUT_WORKOUT = "EXTRA_WORKOUT"
     }
 }

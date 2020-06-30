@@ -31,6 +31,10 @@ class WeekViewModel(application: Application) : AndroidViewModel(application) {
         repository.update(week)
     }
 
+    fun delete(week: Week) = viewModelScope.launch(Dispatchers.IO) {
+        repository.delete(week)
+    }
+
     fun update(weeks: List<Week>) = viewModelScope.launch(Dispatchers.IO) {
         repository.update(weeks)
     }

@@ -27,6 +27,9 @@ interface ExerciseDao {
     @Update
     fun updateExtras(exerciseExtras: List<DayExerciseCrossRef>)
 
+    @Query("DELETE FROM DayExerciseCrossRef WHERE DayID = :dayId AND ExerciseID = :exerciseId")
+    fun deleteJunction(dayId: Long, exerciseId: Long)
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(exercise: Exercise): Long
 

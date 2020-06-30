@@ -42,9 +42,13 @@ class InputDialog(context: Context,
 
             // No point making a callback if value didn't change
             // I'm calling it now that in 2 years time this piece of code will cause me hours of headache.
-            if (newValue != currentValue) {
+            // Update:
+            // It took 3 days for this to waste me some time not knowing why things were working. I'm leaving the comment for fun.
+            /*if (newValue != currentValue) {
                 inputDialogCallback.result(newValue)
-            }
+            }*/
+
+            inputDialogCallback.result(newValue)
 
             dismiss()
         }

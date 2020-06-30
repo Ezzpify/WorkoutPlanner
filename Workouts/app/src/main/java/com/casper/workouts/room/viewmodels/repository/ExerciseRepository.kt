@@ -32,6 +32,11 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
     }
 
     @WorkerThread
+    suspend fun deleteJunction(dayId: Long, exerciseId: Long) {
+        exerciseDao.deleteJunction(dayId, exerciseId)
+    }
+
+    @WorkerThread
     suspend fun updateExtras(exerciseExtras: List<DayExerciseCrossRef>) {
         exerciseDao.updateExtras(exerciseExtras)
     }

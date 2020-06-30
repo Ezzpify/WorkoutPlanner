@@ -5,7 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.casper.workouts.R
-import com.casper.workouts.adapters.WorkoutDayAdapter.DayHolder.Companion.EXTRA_DAY_DAY
+import com.casper.workouts.adapters.WorkoutDayAdapter.Companion.EXTRA_DAY_DAY
 import com.casper.workouts.room.models.Day
 import com.casper.workouts.room.viewmodels.DayViewModel
 import kotlinx.android.synthetic.main.activity_day_edit.*

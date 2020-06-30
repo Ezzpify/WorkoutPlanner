@@ -20,6 +20,11 @@ class WeekRepository(private val weekDao: WeekDao) {
     }
 
     @WorkerThread
+    suspend fun delete(week: Week) {
+        weekDao.delete(week)
+    }
+
+    @WorkerThread
     suspend fun update(weeks: List<Week>) {
         weekDao.update(weeks)
     }

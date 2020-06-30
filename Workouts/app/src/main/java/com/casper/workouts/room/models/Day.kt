@@ -5,7 +5,12 @@ import androidx.room.ForeignKey.CASCADE
 import java.io.Serializable
 import java.sql.Date
 
-@Entity(tableName = "Days", indices = [Index("DayID")])
+@Entity(tableName = "Days",
+    foreignKeys = [ForeignKey(entity = Week::class,
+        parentColumns = arrayOf("WeekID"),
+        childColumns = arrayOf("WeekID"),
+        onDelete = ForeignKey.CASCADE)],
+    indices = [Index("DayID")])
 data class Day (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "DayID") val dayId: Long,

@@ -5,7 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.casper.workouts.R
-import com.casper.workouts.adapters.WorkoutWeekAdapter.WeekHolder.Companion.EXTRA_WEEK_WEEK
+import com.casper.workouts.adapters.WorkoutWeekAdapter.Companion.EXTRA_WEEK_WEEK
 import com.casper.workouts.room.models.Week
 import com.casper.workouts.room.viewmodels.WeekViewModel
 import kotlinx.android.synthetic.main.activity_week_edit.*

@@ -30,6 +30,10 @@ class WorkoutViewModel(application: Application) : AndroidViewModel(application)
         repository.update(workout)
     }
 
+    fun delete(workout: Workout) = viewModelScope.launch(Dispatchers.IO) {
+        repository.delete(workout)
+    }
+
     fun update(workouts: List<Workout>) = viewModelScope.launch(Dispatchers.IO) {
         repository.update(workouts)
     }

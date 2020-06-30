@@ -11,7 +11,7 @@ import androidx.room.*
 )
 data class DeloadExercise (
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "DeloadExerciseID") val deloadExerciseID: Long,
+    @ColumnInfo(name = "ExerciseID") val exerciseId: Long,
 
-    @ColumnInfo(name = "ExerciseID") val exerciseId: Long
+    @ColumnInfo(name = "DeloadPercentage") val deloadPercentage: Double
 )

@@ -20,6 +20,9 @@ interface WorkoutDao {
     @Update
     fun update(workout: Workout)
 
+    @Delete
+    fun delete(workout: Workout)
+
     @Update
     fun update(workouts: List<Workout>)
 }
