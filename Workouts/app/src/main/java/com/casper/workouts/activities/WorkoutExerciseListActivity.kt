@@ -165,6 +165,7 @@ class WorkoutExerciseListActivity : AppCompatActivity(), DeleteItemCallback {
                 val exerciseWeight = intent.getDoubleExtra(CreateExerciseActivity.EXTRA_REPLY_WEIGHT, -1.0)
                 val exerciseSets = intent.getIntExtra(CreateExerciseActivity.EXTRA_REPLY_SETS, -1)
                 val exerciseReps = intent.getIntExtra(CreateExerciseActivity.EXTRA_REPLY_REPS, -1)
+                val deloadPercent = intent.getIntExtra(CreateExerciseActivity.EXTRA_REPLY_DELOAD, -1)
 
                 // If we have a photo, copy this to our application folder
                 var exerciseImageName = ""
@@ -181,6 +182,7 @@ class WorkoutExerciseListActivity : AppCompatActivity(), DeleteItemCallback {
                     exerciseUnit,
                     if (exerciseSets == -1) null else exerciseSets,
                     if (exerciseReps == -1) null else exerciseReps,
+                    if (deloadPercent == -1) null else deloadPercent,
                     exerciseImageName)
 
                 // Now insert the exercise object and wait for UID to be returned so we can insert relation

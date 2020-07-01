@@ -155,9 +155,19 @@
                 android:hint="@string/activity_create_exercise_input_hint_sets"
                 android:inputType="number"
                 android:layout_marginStart="@dimen/padding_view_small"
+                android:nextFocusDown="@+id/deload_percentage"
                 style="@style/Input"/>
 
         </LinearLayout>
+
+        <EditText
+            android:id="@+id/deload_percentage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/activity_create_exercise_input_hint_deload"
+            android:inputType="number"
+            android:layout_marginTop="@dimen/padding_view_normal"
+            style="@style/Input"/>
 
         <Button
             android:layout_width="match_parent"

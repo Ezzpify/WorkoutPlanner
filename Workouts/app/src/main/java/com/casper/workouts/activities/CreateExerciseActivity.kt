@@ -63,6 +63,7 @@ class CreateExerciseActivity : AppCompatActivity() {
         val exerciseUnit = exercise_weight_unit.text.toString().trim()
         val exerciseSets = exercise_sets.text.toString().trim()
         val exerciseReps = exercise_weight_reps.text.toString().trim()
+        val deloadPercentage = deload_percentage.text.toString().trim()
 
         if (exerciseName.isEmpty()) {
             exercise_name.error = errorText
@@ -87,6 +88,7 @@ class CreateExerciseActivity : AppCompatActivity() {
         val exerciseWeightDouble = exerciseWeight.toDoubleOrNull()
         val exerciseSetsInt = exerciseSets.toIntOrNull()
         val exerciseRepsInt = exerciseReps.toIntOrNull()
+        val deloadPercentageInt = deloadPercentage.toIntOrNull()
 
         // Send back our reply intent with all the data
         val replyIntent = Intent()
@@ -97,6 +99,7 @@ class CreateExerciseActivity : AppCompatActivity() {
         replyIntent.putExtra(EXTRA_REPLY_UNIT, exerciseUnit)
         replyIntent.putExtra(EXTRA_REPLY_SETS, exerciseSetsInt)
         replyIntent.putExtra(EXTRA_REPLY_REPS, exerciseRepsInt)
+        replyIntent.putExtra(EXTRA_REPLY_DELOAD, deloadPercentageInt)
         replyIntent.putExtra(EXTRA_REPLY_IMAGE, exerciseImagePath)
 
         setResult(Activity.RESULT_OK, replyIntent)
@@ -145,6 +148,7 @@ class CreateExerciseActivity : AppCompatActivity() {
         const val EXTRA_REPLY_UNIT = "REPLY_UNIT"
         const val EXTRA_REPLY_SETS = "REPLY_SETS"
         const val EXTRA_REPLY_REPS = "REPLY_REPS"
+        const val EXTRA_REPLY_DELOAD = "REPLY_DELOAD"
         const val EXTRA_REPLY_IMAGE = "REPLY_IMAGE"
     }
 }

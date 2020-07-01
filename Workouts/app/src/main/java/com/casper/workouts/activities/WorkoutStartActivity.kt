@@ -15,6 +15,7 @@ import com.casper.workouts.dialogs.InputDialog
 import com.casper.workouts.room.models.Exercise
 import com.casper.workouts.room.models.FullWorkoutDay
 import com.casper.workouts.room.viewmodels.ExerciseViewModel
+import com.casper.workouts.room.viewmodels.WorkoutViewModel
 import com.casper.workouts.utils.FileUtils
 import com.casper.workouts.utils.WorkoutUtils
 import com.squareup.picasso.Picasso
@@ -22,7 +23,9 @@ import kotlinx.android.synthetic.main.activity_workout_start.*
 
 class WorkoutStartActivity: AppCompatActivity() {
     private lateinit var workoutInfo: WorkoutUtils.WorkoutInfo
+
     private lateinit var exerciseViewModel: ExerciseViewModel
+    private lateinit var workoutViewModel: WorkoutViewModel
 
     // Exercise variables
     private var currentExerciseIndex = 0
@@ -35,7 +38,8 @@ class WorkoutStartActivity: AppCompatActivity() {
         // Set workout information from intent bundle
         workoutInfo = intent.getSerializableExtra(EXTRA_WORKOUT_START) as WorkoutUtils.WorkoutInfo
 
-        // View model for updating exercise data
+        // View models for updating workout and exercise data
+        workoutViewModel = ViewModelProvider(this).get(WorkoutViewModel::class.java)
         exerciseViewModel = ViewModelProvider(this).get(ExerciseViewModel::class.java)
 
         // Set up our exercises
@@ -74,6 +78,19 @@ class WorkoutStartActivity: AppCompatActivity() {
         if (exercise.weight != null) {
             exercise_weight.text = getString(R.string.activity_workout_start_weight_format, exercise.weight, exercise.weightUnit)
             weight_parent.visibility = View.VISIBLE
+
+            // Update UI deload information, hide view if deload is not set
+            if (exercise.deloadPercentage != null) {
+                val weight = exercise.weight as Double
+                val deloadPercent = exercise.deloadPercentage as Int
+                val deloadWeight = weight * (deloadPercent / 100.0)
+
+                exercise_deload_weight.text = getString(R.string.activity_workout_start_deload_weight_format, deloadWeight, exercise.weightUnit)
+                deload_parent.visibility = View.VISIBLE
+            }
+            else {
+                deload_parent.visibility = View.GONE
+            }
         }
         else {
             weight_parent.visibility = View.GONE
@@ -140,8 +157,12 @@ class WorkoutStartActivity: AppCompatActivity() {
         // Update last workout unix date
         UserData(this).lastWorkoutUnixDate = System.currentTimeMillis()
 
-        // Update workout day logic
+        //Update workout data and move to next day
+        val workout = workoutInfo.workout
+        workout.currentWorkoutDay += 1
+        workoutViewModel.update(workout)
 
+        // Show splash screen
         val intent = Intent(this, WorkoutCompleteActivity::class.java)
         startActivity(intent)
         finish()

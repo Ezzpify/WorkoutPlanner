@@ -23,6 +23,8 @@ data class Exercise (
 
     @ColumnInfo(name = "Reps") var reps: Int?,
 
+    @ColumnInfo(name = "DeloadPercentage") var deloadPercentage: Int?,
+
     @ColumnInfo(name = "ImageName") var imageName: String?,
 
     @ColumnInfo(name = "LastUpdated") var lastUpdated: Long = System.currentTimeMillis()

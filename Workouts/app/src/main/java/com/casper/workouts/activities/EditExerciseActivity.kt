@@ -20,12 +20,16 @@ import com.casper.workouts.custom.getFilePath
 import com.casper.workouts.custom.loadUrl
 import com.casper.workouts.data.UserData
 import com.casper.workouts.dialogs.InputDialog
-import com.casper.workouts.room.models.DeloadExercise
 import com.casper.workouts.room.models.Exercise
 import com.casper.workouts.room.viewmodels.ExerciseViewModel
 import com.casper.workouts.utils.FileUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_exercise_edit.*
+import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_description
+import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_image
+import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_name
+import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_sets
+import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_weight
 
 class EditExerciseActivity : AppCompatActivity() {
     private lateinit var exercise: Exercise
@@ -49,6 +53,7 @@ class EditExerciseActivity : AppCompatActivity() {
         exercise.weight?.let { exercise_weight.setText(it.toString()) }
         exercise.reps?.let { exercise_weight_reps.setText(it.toString()) }
         exercise.sets?.let { exercise_sets.setText(it.toString()) }
+        exercise.deloadPercentage?.let { deload_percentage.setText(it.toString()) }
 
         exercise.imageName?.let {
             if (it.isNotEmpty()) {
@@ -69,23 +74,6 @@ class EditExerciseActivity : AppCompatActivity() {
         })
     }
 
-    fun onCreateDeloadButtonClicked(view: View) {
-        InputDialog(this,
-            getString(R.string.activity_exercise_edit_create_deload_dialog_title),
-            getString(R.string.activity_exercise_edit_create_deload_dialog_desc),
-            "70",
-            InputType.TYPE_CLASS_NUMBER,
-            object: InputDialogCallback {
-                override fun result(value: String) {
-                    value.toDoubleOrNull()?.let {
-                        // Create new deload exercise object
-                        //val deloadExercise = DeloadExercise(exercise.exerciseId, it)
-                        //exerciseViewModel.insert(deloadExercise)
-                    }
-                }
-            }).show()
-    }
-
     fun onSaveButtonClicked(view: View) {
         var error = false
         val errorText = getString(R.string.required)
@@ -97,6 +85,7 @@ class EditExerciseActivity : AppCompatActivity() {
         val exerciseUnit = exercise_weight_unit.text.toString().trim()
         val exerciseSets = exercise_sets.text.toString().trim()
         val exerciseReps = exercise_weight_reps.text.toString().trim()
+        val deloadPercentage = deload_percentage.text.toString().trim()
 
         if (exerciseName.isEmpty()) {
             exercise_name.error = errorText
@@ -121,6 +110,7 @@ class EditExerciseActivity : AppCompatActivity() {
         val exerciseWeightDouble = exerciseWeight.toDoubleOrNull()
         val exerciseSetsInt = exerciseSets.toIntOrNull()
         val exerciseRepsInt = exerciseReps.toIntOrNull()
+        val deloadPercentageInt = deloadPercentage.toIntOrNull()
 
         // Update exercise object
         exercise.name = exerciseName
@@ -130,6 +120,7 @@ class EditExerciseActivity : AppCompatActivity() {
         exercise.weightUnit = exerciseUnit
         exercise.sets = exerciseSetsInt
         exercise.reps = exerciseRepsInt
+        exercise.deloadPercentage = deloadPercentageInt
         exercise.updateDate()
 
         // Save image and update imageName

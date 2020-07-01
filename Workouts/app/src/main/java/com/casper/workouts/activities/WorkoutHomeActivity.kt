@@ -91,11 +91,9 @@ class WorkoutHomeActivity : AppCompatActivity() {
     }
 
     fun onStartWorkoutButtonClicked(view: View) {
-        if (this::workoutInfo.isInitialized) {
-            val intent = Intent(this, WorkoutStartActivity::class.java)
-            intent.putExtra(EXTRA_WORKOUT_START, workoutInfo)
-            startActivity(intent)
-        }
+        val intent = Intent(this, WorkoutStartActivity::class.java)
+        intent.putExtra(EXTRA_WORKOUT_START, workoutInfo)
+        startActivity(intent)
     }
 
     fun onSkipWorkoutButtonClicked(view: View) {

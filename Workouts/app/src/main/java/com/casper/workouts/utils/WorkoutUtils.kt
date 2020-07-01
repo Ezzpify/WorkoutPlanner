@@ -7,7 +7,7 @@ import com.casper.workouts.room.models.Workout
 import java.io.Serializable
 
 class WorkoutUtils(private val fullWorkout: FullWorkout) {
-    data class WorkoutInfo(val workoutWeek: FullWorkoutWeek, val workoutDay: FullWorkoutDay, val weekIndex: Int, val dayIndex: Int): Serializable
+    data class WorkoutInfo(val workout: Workout, val workoutWeek: FullWorkoutWeek, val workoutDay: FullWorkoutDay, val weekIndex: Int, val dayIndex: Int): Serializable
 
     fun moveDayForward() {
         fullWorkout.workout.currentWorkoutDay += 1
@@ -40,7 +40,7 @@ class WorkoutUtils(private val fullWorkout: FullWorkout) {
         val newDayIndex = newWeek.days.indexOfFirst { it.day.dayId == newDay.day.dayId }
 
         // Returns our new workout day
-        return WorkoutInfo(newWeek, newDay, newWeekIndex, newDayIndex)
+        return WorkoutInfo(getWorkout(), newWeek, newDay, newWeekIndex, newDayIndex)
     }
 
     private fun getNextWeek(): FullWorkoutWeek {

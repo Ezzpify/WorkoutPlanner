@@ -73,7 +73,7 @@
                     <ImageView
                         android:id="@+id/image"
                         android:layout_width="match_parent"
-                        android:layout_height="125dp"
+                        android:layout_height="85dp"
                         app:srcCompat="@drawable/default_workout_image"
                         android:scaleType="centerCrop"/>
 
@@ -145,7 +145,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:maxLines="1"
                         android:text="@string/no_description"
                         android:textColor="@color/colorTextGray"
                         android:textSize="@dimen/text_size_medium"/>
