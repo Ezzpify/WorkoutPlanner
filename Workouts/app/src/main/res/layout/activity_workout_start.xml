@@ -49,7 +49,7 @@
                         <ImageView
                             android:id="@+id/exercise_image"
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
+                            android:layout_height="200dp"
                             app:srcCompat="@drawable/default_workout_image"
                             android:scaleType="centerCrop"/>
 

@@ -95,6 +95,24 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="TextTagDark" parent="Widget.AppCompat.TextView">
+        <item name="android:background">@drawable/content_container_rounded_dark</item>
+        <item name="android:paddingTop">@dimen/padding_view_tiny</item>
+        <item name="android:paddingBottom">@dimen/padding_view_tiny</item>
+        <item name="android:paddingStart">@dimen/padding_view_small</item>
+        <item name="android:paddingEnd">@dimen/padding_view_small</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextTagOutline" parent="Widget.AppCompat.TextView">
+        <item name="android:background">@drawable/content_container_rounded_outline</item>
+        <item name="android:paddingTop">@dimen/padding_view_tiny</item>
+        <item name="android:paddingBottom">@dimen/padding_view_tiny</item>
+        <item name="android:paddingStart">@dimen/padding_view_small</item>
+        <item name="android:paddingEnd">@dimen/padding_view_small</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="TextTagBlue" parent="Widget.AppCompat.TextView">
         <item name="android:background">@drawable/content_container_rounded_blue</item>
         <item name="android:paddingTop">@dimen/padding_view_tiny</item>

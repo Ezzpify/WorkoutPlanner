@@ -175,7 +175,7 @@ class WorkoutStartActivity: AppCompatActivity() {
             getString(R.string.activity_workout_start_update_weight_dialog_title),
             getString(R.string.activity_workout_start_update_weight_dialog_desc),
             currentExercise.weight.toString(),
-            InputType.TYPE_CLASS_NUMBER,
+            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL,
             object: InputDialogCallback {
                 override fun result(value: String) {
                     // If new value is same as old then we don't need to change anything

@@ -19,7 +19,6 @@ import com.casper.workouts.utils.FileUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_workout_exercise_item.view.*
 import kotlinx.android.synthetic.main.adapter_workout_exercise_item.view.description
-import kotlinx.android.synthetic.main.adapter_workout_exercise_item.view.image
 import kotlinx.android.synthetic.main.adapter_workout_exercise_item.view.title
 import java.util.*
 import kotlin.collections.ArrayList
@@ -99,15 +98,6 @@ class WorkoutExerciseAdapter() : RecyclerView.Adapter<WorkoutExerciseAdapter.Exe
         fun bindExercise(exercise: Exercise) {
             item = exercise
 
-            // Get exercise image
-            exercise.imageName?.let { imageName ->
-                if (imageName.isNotEmpty()) {
-                    FileUtils().getWorkoutImage(view.context, imageName)?.let { file ->
-                        Picasso.get().load(file).into(view.image)
-                    }
-                }
-            }
-
             // Set exercise UI data
             view.title.text = exercise.name
             view.exercise_tag.text = exercise.tag
@@ -167,6 +157,7 @@ class WorkoutExerciseAdapter() : RecyclerView.Adapter<WorkoutExerciseAdapter.Exe
         private fun setWeight(weight: Double?, unit: String?) {
             weight?.let {
                 view.exercise_weight.text = "$weight $unit"
+                view.exercise_weight.visibility = View.VISIBLE
                 return
             }
 
@@ -177,6 +168,7 @@ class WorkoutExerciseAdapter() : RecyclerView.Adapter<WorkoutExerciseAdapter.Exe
         private fun setRepsSets(reps: Int?, sets: Int?) {
             val repsText = if (reps != null) "R: $reps" else ""
             val setsText = if (sets != null) "S: $sets" else ""
+            view.exercise_reps_sets.visibility = View.VISIBLE
 
             if (repsText.isNotEmpty() && setsText.isNotEmpty()) {
                 view.exercise_reps_sets.text = "$repsText / $setsText"
