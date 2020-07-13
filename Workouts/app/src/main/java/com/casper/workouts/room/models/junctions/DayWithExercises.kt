@@ -1,10 +1,11 @@
-package com.casper.workouts.room.models.dayjunctions
+package com.casper.workouts.room.models.junctions
 
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
 import com.casper.workouts.room.models.Day
 import com.casper.workouts.room.models.Exercise
+import com.casper.workouts.room.models.junctions.DayExerciseCrossRef
 
 data class DayWithExercises (
     @Embedded val day: Day,

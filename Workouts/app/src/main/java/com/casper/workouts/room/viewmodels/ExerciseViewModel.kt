@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.casper.workouts.room.MyDatabase
 import com.casper.workouts.room.models.Exercise
-import com.casper.workouts.room.models.dayjunctions.DayExerciseCrossRef
-import com.casper.workouts.room.models.dayjunctions.DayWithExercises
+import com.casper.workouts.room.models.junctions.DayExerciseCrossRef
+import com.casper.workouts.room.models.junctions.DayWithExercises
 import com.casper.workouts.room.viewmodels.repository.ExerciseRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

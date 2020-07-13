@@ -1,4 +1,4 @@
-package com.casper.workouts.room.models.dayjunctions
+package com.casper.workouts.room.models.junctions
 
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo

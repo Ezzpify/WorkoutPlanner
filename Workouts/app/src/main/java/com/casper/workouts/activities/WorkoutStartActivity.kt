@@ -3,7 +3,6 @@ package com.casper.workouts.activities
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +12,6 @@ import com.casper.workouts.callbacks.InputDialogCallback
 import com.casper.workouts.data.UserData
 import com.casper.workouts.dialogs.InputDialog
 import com.casper.workouts.room.models.Exercise
-import com.casper.workouts.room.models.FullWorkoutDay
 import com.casper.workouts.room.viewmodels.ExerciseViewModel
 import com.casper.workouts.room.viewmodels.WorkoutViewModel
 import com.casper.workouts.utils.FileUtils
@@ -43,7 +41,7 @@ class WorkoutStartActivity: AppCompatActivity() {
         exerciseViewModel = ViewModelProvider(this).get(ExerciseViewModel::class.java)
 
         // Set up our exercises
-        exercises = workoutInfo.workoutDay.exercises
+        exercises = workoutInfo.workoutDay.exercises.sortedBy { it.sortingIndex }
 
         displayNextExercise()
     }
@@ -78,19 +76,6 @@ class WorkoutStartActivity: AppCompatActivity() {
         if (exercise.weight != null) {
             exercise_weight.text = getString(R.string.activity_workout_start_weight_format, exercise.weight, exercise.weightUnit)
             weight_parent.visibility = View.VISIBLE
-
-            // Update UI deload information, hide view if deload is not set
-            if (exercise.deloadPercentage != null) {
-                val weight = exercise.weight as Double
-                val deloadPercent = exercise.deloadPercentage as Int
-                val deloadWeight = weight * (deloadPercent / 100.0)
-
-                exercise_deload_weight.text = getString(R.string.activity_workout_start_deload_weight_format, deloadWeight, exercise.weightUnit)
-                deload_parent.visibility = View.VISIBLE
-            }
-            else {
-                deload_parent.visibility = View.GONE
-            }
         }
         else {
             weight_parent.visibility = View.GONE

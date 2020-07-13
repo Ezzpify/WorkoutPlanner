@@ -3,8 +3,8 @@ package com.casper.workouts.room.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.casper.workouts.room.models.Exercise
-import com.casper.workouts.room.models.dayjunctions.DayExerciseCrossRef
-import com.casper.workouts.room.models.dayjunctions.DayWithExercises
+import com.casper.workouts.room.models.junctions.DayExerciseCrossRef
+import com.casper.workouts.room.models.junctions.DayWithExercises
 
 @Dao
 interface ExerciseDao {

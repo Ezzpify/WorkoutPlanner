@@ -59,8 +59,7 @@
                 android:id="@+id/workout_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layoutAnimation="@anim/layout_animation_fall_down"
-                android:padding="@dimen/card_view_list_padding" />
+                android:layoutAnimation="@anim/layout_animation_fall_down" />
 
         </RelativeLayout>
 

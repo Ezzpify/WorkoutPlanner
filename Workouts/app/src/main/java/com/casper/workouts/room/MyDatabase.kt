@@ -9,7 +9,7 @@ import com.casper.workouts.room.dao.ExerciseDao
 import com.casper.workouts.room.dao.WeekDao
 import com.casper.workouts.room.dao.WorkoutDao
 import com.casper.workouts.room.models.*
-import com.casper.workouts.room.models.dayjunctions.DayExerciseCrossRef
+import com.casper.workouts.room.models.junctions.DayExerciseCrossRef
 import kotlinx.coroutines.CoroutineScope
 
 @Database(entities = [Workout::class, Week::class, Day::class, Exercise::class, DayExerciseCrossRef::class], exportSchema = false, version = 1)

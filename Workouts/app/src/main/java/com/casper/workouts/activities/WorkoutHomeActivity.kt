@@ -47,8 +47,9 @@ class WorkoutHomeActivity : AppCompatActivity() {
             home_no_schedule.visibility = View.GONE
 
             // Check so workout have proper data before attempting to set up workout
-            if (fullWorkout.weeks.isNotEmpty() && fullWorkout.weeks.any { week -> week.days.isNotEmpty() && week.days.any { day -> day.exercises.isNotEmpty() } }) {
+            if (fullWorkout.hasNecessaryData()) {
                 home_workout.visibility = View.VISIBLE
+
                 this.workoutUtils = WorkoutUtils(fullWorkout)
                 setNextWorkoutDay()
             }

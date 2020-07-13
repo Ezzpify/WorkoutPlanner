@@ -1,8 +1,8 @@
 package com.casper.workouts.utils
 
-import com.casper.workouts.room.models.FullWorkout
-import com.casper.workouts.room.models.FullWorkoutDay
-import com.casper.workouts.room.models.FullWorkoutWeek
+import com.casper.workouts.room.models.junctions.FullWorkout
+import com.casper.workouts.room.models.junctions.FullWorkoutDay
+import com.casper.workouts.room.models.junctions.FullWorkoutWeek
 import com.casper.workouts.room.models.Workout
 import java.io.Serializable
 
@@ -26,8 +26,11 @@ class WorkoutUtils(private val fullWorkout: FullWorkout) {
             newWeek = getNextWeek()
         }
 
+        // List of sorted days, same as weeks
+        val days = newWeek.days.sortedBy { it.day.sortingIndex }
+
         // Get our potential new day
-        val newDay = newWeek.days[fullWorkout.workout.currentWorkoutDay]
+        val newDay = days[fullWorkout.workout.currentWorkoutDay]
         if (newDay.exercises.isEmpty()) {
             // No exercises in this day, move to next day
             fullWorkout.workout.currentWorkoutDay += 1
@@ -37,21 +40,24 @@ class WorkoutUtils(private val fullWorkout: FullWorkout) {
         // Get indexes for new week and day
         // Could evaluate these during the loop, but I'm lazy now
         val newWeekIndex = fullWorkout.weeks.indexOfFirst { it.week.weekId == newWeek.week.weekId }
-        val newDayIndex = newWeek.days.indexOfFirst { it.day.dayId == newDay.day.dayId }
+        val newDayIndex = days.indexOfFirst { it.day.dayId == newDay.day.dayId }
 
         // Returns our new workout day
         return WorkoutInfo(getWorkout(), newWeek, newDay, newWeekIndex, newDayIndex)
     }
 
     private fun getNextWeek(): FullWorkoutWeek {
-        if (fullWorkout.weeks.size - 1 < fullWorkout.workout.currentWorkoutWeek) {
+        // First we need to sort by sorting index since this isn't done in the SQL query
+        val weeks = fullWorkout.weeks.sortedBy { it.week.sortingIndex }
+
+        if (weeks.size - 1 < fullWorkout.workout.currentWorkoutWeek) {
             // We ran out of weeks, reset to week one
             fullWorkout.workout.currentWorkoutWeek = 0
-            return fullWorkout.weeks.first()
+            return weeks.first()
         }
         else {
             // Get our potential new week
-            val newWeek = fullWorkout.weeks[fullWorkout.workout.currentWorkoutWeek]
+            val newWeek = weeks[fullWorkout.workout.currentWorkoutWeek]
             if (newWeek.days.isEmpty()) {
                 // This week does not have any days, so skip this one
                 fullWorkout.workout.currentWorkoutWeek += 1

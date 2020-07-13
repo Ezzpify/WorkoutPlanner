@@ -3,7 +3,7 @@ package com.casper.workouts.room.viewmodels.repository
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.casper.workouts.room.dao.WorkoutDao
-import com.casper.workouts.room.models.FullWorkout
+import com.casper.workouts.room.models.junctions.FullWorkout
 import com.casper.workouts.room.models.Workout
 
 class WorkoutRepository(private val workoutDao: WorkoutDao) {

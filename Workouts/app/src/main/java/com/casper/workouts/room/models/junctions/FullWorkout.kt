@@ -1,7 +1,10 @@
-package com.casper.workouts.room.models
+package com.casper.workouts.room.models.junctions
 
 import androidx.room.*
-import com.casper.workouts.room.models.dayjunctions.DayExerciseCrossRef
+import com.casper.workouts.room.models.Day
+import com.casper.workouts.room.models.Exercise
+import com.casper.workouts.room.models.Week
+import com.casper.workouts.room.models.Workout
 import java.io.Serializable
 
 data class FullWorkout(
@@ -11,8 +14,12 @@ data class FullWorkout(
         entityColumn = "WorkoutID",
         entity = Week::class
     )
-    val weeks: List<FullWorkoutWeek>
-)
+    var weeks: List<FullWorkoutWeek>
+) {
+    fun hasNecessaryData(): Boolean {
+        return weeks.isNotEmpty() && weeks.any { week -> week.days.isNotEmpty() && week.days.any { day -> day.exercises.isNotEmpty() } }
+    }
+}
 
 data class FullWorkoutWeek(
     @Embedded val week: Week,
@@ -21,7 +28,7 @@ data class FullWorkoutWeek(
         entityColumn = "WeekID",
         entity = Day::class
     )
-    val days: List<FullWorkoutDay>
+    var days: List<FullWorkoutDay>
 ): Serializable
 
 data class FullWorkoutDay(
@@ -33,5 +40,5 @@ data class FullWorkoutDay(
             parentColumn = "DayID",
             entityColumn = "ExerciseID")
     )
-    val exercises: List<Exercise>
+    var exercises: List<Exercise>
 ): Serializable

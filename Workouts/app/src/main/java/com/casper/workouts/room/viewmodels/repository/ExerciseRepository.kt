@@ -4,8 +4,8 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.casper.workouts.room.dao.ExerciseDao
 import com.casper.workouts.room.models.Exercise
-import com.casper.workouts.room.models.dayjunctions.DayExerciseCrossRef
-import com.casper.workouts.room.models.dayjunctions.DayWithExercises
+import com.casper.workouts.room.models.junctions.DayExerciseCrossRef
+import com.casper.workouts.room.models.junctions.DayWithExercises
 
 class ExerciseRepository(private val exerciseDao: ExerciseDao) {
     val allExercises: LiveData<List<Exercise>> = exerciseDao.getAllExercises()

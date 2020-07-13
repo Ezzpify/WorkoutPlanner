@@ -2,7 +2,7 @@ package com.casper.workouts.room.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.casper.workouts.room.models.FullWorkout
+import com.casper.workouts.room.models.junctions.FullWorkout
 import com.casper.workouts.room.models.Workout
 
 @Dao

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.casper.workouts.R
-import com.casper.workouts.activities.ExercisesSearchActivity.Companion.EXTRA_REPLY_EXERCISE
+import com.casper.workouts.activities.SearchExercisesActivity.Companion.EXTRA_REPLY_EXERCISE
 import com.casper.workouts.adapters.WorkoutDayAdapter
 import com.casper.workouts.adapters.WorkoutExerciseAdapter
 import com.casper.workouts.callbacks.DeleteItemCallback
@@ -22,8 +22,8 @@ import com.casper.workouts.custom.ListItemDecoration
 import com.casper.workouts.dialogs.ErrorDialog
 import com.casper.workouts.dialogs.OptionDialog
 import com.casper.workouts.room.models.Exercise
-import com.casper.workouts.room.models.dayjunctions.DayExerciseCrossRef
-import com.casper.workouts.room.models.dayjunctions.DayWithExercises
+import com.casper.workouts.room.models.junctions.DayExerciseCrossRef
+import com.casper.workouts.room.models.junctions.DayWithExercises
 import com.casper.workouts.room.viewmodels.ExerciseViewModel
 import com.casper.workouts.utils.FileUtils
 import kotlinx.android.synthetic.main.activity_workout_exercises_list.*
@@ -51,7 +51,7 @@ class WorkoutExerciseListActivity : AppCompatActivity(), DeleteItemCallback {
         }
 
         // Set view data
-        day_title.text = dayName
+        exercise_title.text = dayName
 
         // Set up recyclerview for displaying days
         linearLayoutManager = LinearLayoutManager(this)
@@ -72,6 +72,8 @@ class WorkoutExerciseListActivity : AppCompatActivity(), DeleteItemCallback {
 
             val sortedList = day.exercises.sortedBy { it.sortingIndex }
             adapter.setItems(sortedList)
+
+            exercise_subtitle.text = getString(R.string.activity_workout_exercise_title, sortedList.size)
         })
 
         // Allow for drag to reorder
@@ -139,7 +141,7 @@ class WorkoutExerciseListActivity : AppCompatActivity(), DeleteItemCallback {
             object: OptionDialogCallback {
                 override fun optionOneClicked() {
                     // Add existing
-                    val intent = Intent(applicationContext, ExercisesSearchActivity::class.java)
+                    val intent = Intent(applicationContext, SearchExercisesActivity::class.java)
                     startActivityForResult(intent, RESULT_ADD_EXISTING_EXERCISE)
                 }
 
@@ -182,7 +184,6 @@ class WorkoutExerciseListActivity : AppCompatActivity(), DeleteItemCallback {
                     exerciseUnit,
                     if (exerciseSets == -1) null else exerciseSets,
                     if (exerciseReps == -1) null else exerciseReps,
-                    if (deloadPercent == -1) null else deloadPercent,
                     exerciseImageName)
 
                 // Now insert the exercise object and wait for UID to be returned so we can insert relation
@@ -194,7 +195,12 @@ class WorkoutExerciseListActivity : AppCompatActivity(), DeleteItemCallback {
                     id.observe(this@WorkoutExerciseListActivity, Observer {
                         // We got the ID of the object
                         // Now we will create a new relationship object between day and exercise
-                        val relation = DayExerciseCrossRef(dayId, it, sortingIndex)
+                        val relation =
+                            DayExerciseCrossRef(
+                                dayId,
+                                it,
+                                sortingIndex
+                            )
                         exerciseViewModel.insert(relation)
                     })
                 }
@@ -214,7 +220,12 @@ class WorkoutExerciseListActivity : AppCompatActivity(), DeleteItemCallback {
 
                 // Add relation for day and selected exercise
                 val sortingIndex = adapter.itemCount
-                val relation = DayExerciseCrossRef(dayId, exercise.exerciseId, sortingIndex)
+                val relation =
+                    DayExerciseCrossRef(
+                        dayId,
+                        exercise.exerciseId,
+                        sortingIndex
+                    )
                 exerciseViewModel.insert(relation)
             }
         }

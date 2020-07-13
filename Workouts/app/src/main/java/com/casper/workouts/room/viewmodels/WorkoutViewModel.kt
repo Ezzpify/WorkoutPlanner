@@ -3,7 +3,7 @@ package com.casper.workouts.room.viewmodels
 import android.app.Application
 import androidx.lifecycle.*
 import com.casper.workouts.room.MyDatabase
-import com.casper.workouts.room.models.FullWorkout
+import com.casper.workouts.room.models.junctions.FullWorkout
 import com.casper.workouts.room.models.Workout
 import com.casper.workouts.room.viewmodels.repository.WorkoutRepository
 import kotlinx.coroutines.Dispatchers

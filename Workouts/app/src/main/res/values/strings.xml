@@ -64,7 +64,7 @@
     <string name="activity_create_day_input_hint_desc">Day description</string>
 
     <!-- Activity workout exercise -->
-    <string name="activity_workout_exercise_title">Scheduled exercises</string>
+    <string name="activity_workout_exercise_title">Scheduled exercises: %1$d</string>
     <string name="activity_workout_exercise_add_dialog_title">Add exercise</string>
     <string name="activity_workout_exercise_add_dialog_desc">Do you want to create a new exercise, or add one that you already made?</string>
     <string name="activity_workout_exercise_add_dialog_option_one">Existing</string>

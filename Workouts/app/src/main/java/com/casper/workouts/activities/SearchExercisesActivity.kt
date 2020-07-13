@@ -15,17 +15,17 @@ import com.casper.workouts.callbacks.SearchExerciseSelectedCallback
 import com.casper.workouts.custom.ListItemDecoration
 import com.casper.workouts.room.models.Exercise
 import com.casper.workouts.room.viewmodels.ExerciseViewModel
-import kotlinx.android.synthetic.main.activity_exercise_search.*
+import kotlinx.android.synthetic.main.activity_search_exercises.*
 import kotlinx.android.synthetic.main.activity_workout_exercises_list.exercises_list
 
-class ExercisesSearchActivity : AppCompatActivity(), SearchExerciseSelectedCallback {
+class SearchExercisesActivity : AppCompatActivity(), SearchExerciseSelectedCallback {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: WorkoutExerciseAdapter
     private lateinit var exerciseViewModel: ExerciseViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_exercise_search)
+        setContentView(R.layout.activity_search_exercises)
 
         // Set up recyclerview for displaying days
         linearLayoutManager = LinearLayoutManager(this)

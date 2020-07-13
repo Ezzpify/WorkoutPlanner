@@ -32,13 +32,14 @@
                     android:padding="@dimen/padding_view_large">
 
                     <TextView
-                        android:id="@+id/day_title"
+                        android:id="@+id/exercise_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/placeholder"
                         style="@style/PageTitle"/>
 
                     <TextView
+                        android:id="@+id/exercise_subtitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/activity_workout_exercise_title"
@@ -59,8 +60,7 @@
                 android:id="@+id/exercises_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layoutAnimation="@anim/layout_animation_fall_down"
-                android:padding="@dimen/card_view_list_padding" />
+                android:layoutAnimation="@anim/layout_animation_fall_down" />
 
         </RelativeLayout>
 
