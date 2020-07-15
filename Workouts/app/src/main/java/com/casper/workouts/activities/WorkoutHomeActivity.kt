@@ -93,7 +93,8 @@ class WorkoutHomeActivity : AppCompatActivity() {
 
     fun onStartWorkoutButtonClicked(view: View) {
         val intent = Intent(this, WorkoutStartActivity::class.java)
-        intent.putExtra(EXTRA_WORKOUT_START, workoutInfo)
+        intent.putExtra(EXTRA_WORKOUT_WORKOUT, workoutInfo.workout);
+        intent.putExtra(EXTRA_WORKOUT_DAY, workoutInfo.workoutDay.day);
         startActivity(intent)
     }
 
@@ -112,6 +113,7 @@ class WorkoutHomeActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_WORKOUT_UID = "EXTRA_UID"
         const val EXTRA_WORKOUT_NAME = "EXTRA_NAME"
-        const val EXTRA_WORKOUT_START = "EXTRA_NAME"
+        const val EXTRA_WORKOUT_WORKOUT = "EXTRA_WORKOUT"
+        const val EXTRA_WORKOUT_DAY = "EXTRA_DAY"
     }
 }

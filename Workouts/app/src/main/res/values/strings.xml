@@ -96,6 +96,7 @@
     <string name="activity_workout_start_update_weight">Update weight</string>
     <string name="activity_workout_start_next_exercise">Next exercise</string>
     <string name="activity_workout_start_complete_workout">Complete workout</string>
+    <string name="activity_workout_start_slide_to_start_stopwatch">SLIDE TO START STOPWATCH</string>
     <string name="activity_workout_start_update_weight_dialog_title">Update weight</string>
     <string name="activity_workout_start_update_weight_dialog_desc">Enter your new weight for this exercise.\n\nThis will change the weight in all days which this exercise belongs to.</string>
 

@@ -4,6 +4,7 @@
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -36,6 +37,7 @@
         <activity android:name=".activities.EditDayActivity" />
         <activity android:name=".activities.EditWeekActivity" />
         <activity android:name=".activities.EditWorkoutActivity" />
+        <activity android:name=".activities.TimerActivity" />
     </application>
 
 </manifest>

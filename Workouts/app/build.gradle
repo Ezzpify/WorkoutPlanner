@@ -54,6 +54,9 @@ dependencies {
     // Picasso components
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    // Slide to act
+    implementation "com.ncorti:slidetoact:0.8.0"
+
     // PrettyTime
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
 

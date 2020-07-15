@@ -5,22 +5,29 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.casper.workouts.R
-import com.casper.workouts.activities.WorkoutHomeActivity.Companion.EXTRA_WORKOUT_START
+import com.casper.workouts.activities.WorkoutHomeActivity.Companion.EXTRA_WORKOUT_DAY
+import com.casper.workouts.activities.WorkoutHomeActivity.Companion.EXTRA_WORKOUT_WORKOUT
 import com.casper.workouts.callbacks.InputDialogCallback
 import com.casper.workouts.data.UserData
 import com.casper.workouts.dialogs.InputDialog
+import com.casper.workouts.room.models.Day
 import com.casper.workouts.room.models.Exercise
+import com.casper.workouts.room.models.Workout
 import com.casper.workouts.room.viewmodels.ExerciseViewModel
 import com.casper.workouts.room.viewmodels.WorkoutViewModel
 import com.casper.workouts.utils.FileUtils
 import com.casper.workouts.utils.WorkoutUtils
+import com.ncorti.slidetoact.SlideToActView
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_workout_exercises_list.*
 import kotlinx.android.synthetic.main.activity_workout_start.*
 
-class WorkoutStartActivity: AppCompatActivity() {
-    private lateinit var workoutInfo: WorkoutUtils.WorkoutInfo
+class WorkoutStartActivity: AppCompatActivity(), SlideToActView.OnSlideCompleteListener {
+    private lateinit var workout: Workout
+    private lateinit var day: Day
 
     private lateinit var exerciseViewModel: ExerciseViewModel
     private lateinit var workoutViewModel: WorkoutViewModel
@@ -34,16 +41,25 @@ class WorkoutStartActivity: AppCompatActivity() {
         setContentView(R.layout.activity_workout_start)
 
         // Set workout information from intent bundle
-        workoutInfo = intent.getSerializableExtra(EXTRA_WORKOUT_START) as WorkoutUtils.WorkoutInfo
+        workout = intent.getSerializableExtra(EXTRA_WORKOUT_WORKOUT) as Workout
+        day = intent.getSerializableExtra(EXTRA_WORKOUT_DAY) as Day
 
         // View models for updating workout and exercise data
         workoutViewModel = ViewModelProvider(this).get(WorkoutViewModel::class.java)
         exerciseViewModel = ViewModelProvider(this).get(ExerciseViewModel::class.java)
 
         // Set up our exercises
-        exercises = workoutInfo.workoutDay.exercises.sortedBy { it.sortingIndex }
+        exerciseViewModel.getExercises(day.dayId).observe(this, Observer { day ->
+            // Get the sorting index from the junction table and add that value to all exercise objects so we can sort them
+            for ((index, value) in day.extras.withIndex()) {
+                day.exercises[index].sortingIndex = value.sortingIndex
+            }
 
-        displayNextExercise()
+            exercises = day.exercises.sortedBy { it.sortingIndex }
+            displayNextExercise()
+        })
+
+        timer_slider.onSlideCompleteListener = this
     }
 
     private fun displayNextExercise() {
@@ -143,7 +159,6 @@ class WorkoutStartActivity: AppCompatActivity() {
         UserData(this).lastWorkoutUnixDate = System.currentTimeMillis()
 
         //Update workout data and move to next day
-        val workout = workoutInfo.workout
         workout.currentWorkoutDay += 1
         workoutViewModel.update(workout)
 
@@ -177,6 +192,12 @@ class WorkoutStartActivity: AppCompatActivity() {
                     exerciseViewModel.update(currentExercise)
                 }
             }).show()
+    }
+
+    override fun onSlideComplete(view: SlideToActView) {
+        val intent = Intent(this, TimerActivity::class.java)
+        startActivity(intent)
+        timer_slider.resetSlider()
     }
 
     companion object {
