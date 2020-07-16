@@ -19,6 +19,7 @@ import com.casper.workouts.room.models.Exercise
 import com.casper.workouts.room.models.Workout
 import com.casper.workouts.room.viewmodels.ExerciseViewModel
 import com.casper.workouts.room.viewmodels.WorkoutViewModel
+import com.google.android.material.tabs.TabLayoutMediator
 import com.ncorti.slidetoact.SlideToActView
 import kotlinx.android.synthetic.main.activity_workout_start.*
 import kotlin.math.abs
@@ -59,6 +60,10 @@ class WorkoutStartActivity: AppCompatActivity(), SlideToActView.OnSlideCompleteL
 
             val exerciseAdapter = ExerciseFragmentAdapter(this, exercises)
             view_pager.adapter = exerciseAdapter
+
+            TabLayoutMediator(tab_layout, view_pager) { tab, position ->
+                //Some implementation
+            }.attach()
         })
 
         view_pager.offscreenPageLimit = 5
@@ -69,7 +74,44 @@ class WorkoutStartActivity: AppCompatActivity(), SlideToActView.OnSlideCompleteL
     }
 
     override fun transformPage(page: View, position: Float) {
-        val minScale = 0.85f
+        val minScale = 0.75f
+        page.apply {
+            val pageWidth = width
+            when {
+                position < -1 -> { // [-Infinity,-1)
+                    // This page is way off-screen to the left.
+                    alpha = 0f
+                }
+                position <= 0 -> { // [-1,0]
+                    // Use the default slide transition when moving to the left page
+                    alpha = 1f
+                    translationX = 0f
+                    translationZ = 0f
+                    scaleX = 1f
+                    scaleY = 1f
+                }
+                position <= 1 -> { // (0,1]
+                    // Fade the page out.
+                    alpha = 1 - position
+
+                    // Counteract the default slide transition
+                    translationX = pageWidth * -position
+                    // Move it behind the left page
+                    translationZ = -1f
+
+                    // Scale the page down (between MIN_SCALE and 1)
+                    val scaleFactor = (minScale + (1 - minScale) * (1 - abs(position)))
+                    scaleX = scaleFactor
+                    scaleY = scaleFactor
+                }
+                else -> { // (1,+Infinity]
+                    // This page is way off-screen to the right.
+                    alpha = 0f
+                }
+            }
+        }
+
+        /*val minScale = 0.85f
         val minAlpha = 0.5f
 
         page.apply {
@@ -80,7 +122,7 @@ class WorkoutStartActivity: AppCompatActivity(), SlideToActView.OnSlideCompleteL
                     // This page is way off-screen to the left.
                     alpha = 0f
                 }
-                position <= 1 -> { // [-1,1]
+                position <= 1 -> { // (0,1]
                     // Modify the default slide transition to shrink the page as well
                     val scaleFactor = max(minScale, 1 - abs(position))
                     val verticalMargin = pageHeight * (1 - scaleFactor) / 2
@@ -104,7 +146,7 @@ class WorkoutStartActivity: AppCompatActivity(), SlideToActView.OnSlideCompleteL
                     alpha = 0f
                 }
             }
-        }
+        }*/
     }
 
     override fun onSlideComplete(view: SlideToActView) {
