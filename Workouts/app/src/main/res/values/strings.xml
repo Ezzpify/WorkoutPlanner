@@ -83,6 +83,7 @@
     <string name="activity_create_exercise_input_hint_weight_unit">Unit</string>
     <string name="activity_create_exercise_input_hint_sets">Number of sets</string>
     <string name="activity_create_exercise_input_hint_reps">Number of reps</string>
+    <string name="activity_create_exercise_input_hint_timer">Timer seconds</string>
     <string name="activity_create_exercise_checkbox_enable_timer">Enable timer</string>
 
     <!-- Activity exercise search -->
@@ -97,7 +98,7 @@
     <string name="activity_workout_start_update_weight">Update</string>
     <string name="activity_workout_start_next_exercise">Next exercise</string>
     <string name="activity_workout_start_complete_workout">Complete workout</string>
-    <string name="activity_workout_start_start_timer">Start timer</string>
+    <string name="activity_workout_start_start_timer">Start timer (%1$ds)</string>
     <string name="activity_workout_start_slide_to_complete_workout">SLIDE TO COMPLETE WORKOUT</string>
     <string name="activity_workout_start_update_weight_dialog_title">Update weight</string>
     <string name="activity_workout_start_update_weight_dialog_desc">Enter your new weight for this exercise.\n\nThis will change the weight in all days which this exercise belongs to.</string>

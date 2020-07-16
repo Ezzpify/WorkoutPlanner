@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.casper.workouts.R
 import com.casper.workouts.activities.TimerActivity
+import com.casper.workouts.adapters.WorkoutListAdapter
 import com.casper.workouts.callbacks.InputDialogCallback
 import com.casper.workouts.dialogs.InputDialog
 import com.casper.workouts.room.models.Exercise
@@ -107,9 +108,11 @@ class ExerciseFragment(private val exercise: Exercise): Fragment() {
         }
         
         // Exercise timer
-        if (exercise.timer) {
+        if (exercise.timerEnabled && exercise.timerSeconds > 0) {
+            start_timer_button.text = getString(R.string.activity_workout_start_start_timer, exercise.timerSeconds)
             start_timer_button.setOnClickListener {
                 val intent = Intent(activity, TimerActivity::class.java)
+                intent.putExtra(TimerActivity.EXTRA_COUNTDOWN_TIME, exercise.timerSeconds)
                 startActivity(intent)
             }
         }

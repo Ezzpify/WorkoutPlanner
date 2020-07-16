@@ -31,6 +31,7 @@
             android:textColor="@color/white"
             android:textSize="85sp"
             android:gravity="center_horizontal"
+            android:countDown="true"
             style="@style/PageTitle"/>
 
         <LinearLayout

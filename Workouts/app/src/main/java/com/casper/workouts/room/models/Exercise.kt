@@ -23,7 +23,9 @@ data class Exercise (
 
     @ColumnInfo(name = "Reps") var reps: Int?,
 
-    @ColumnInfo(name = "Timer") var timer: Boolean,
+    @ColumnInfo(name = "TimerSeconds") var timerSeconds: Int,
+
+    @ColumnInfo(name = "Timer") var timerEnabled: Boolean,
 
     @ColumnInfo(name = "ImageName") var imageName: String?,
 

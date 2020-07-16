@@ -155,27 +155,47 @@
                 android:hint="@string/activity_create_exercise_input_hint_sets"
                 android:inputType="number"
                 android:layout_marginStart="@dimen/padding_view_small"
-                android:nextFocusDown="@+id/deload_percentage"
+                android:nextFocusDown="@+id/timer_seconds"
                 style="@style/Input"/>
 
         </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/padding_view_normal">
+
+        <EditText
+            android:id="@+id/timer_seconds"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:hint="@string/activity_create_exercise_input_hint_timer"
+            android:inputType="number"
+            android:nextFocusDown="@+id/deload_percentage"
+            android:layout_marginEnd="@dimen/padding_view_small"
+            style="@style/Input"/>
+
         <CheckBox
             android:id="@+id/timer_checkbox"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_view_normal"
+            android:layout_marginStart="@dimen/padding_view_small"
             android:text="@string/activity_create_exercise_checkbox_enable_timer"
             style="@style/Checkbox"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/save"
-            android:layout_marginTop="@dimen/padding_view_normal"
-            android:onClick="onSaveExerciseButtonClicked"
-            style="@style/ButtonDark"/>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/save"
+        android:layout_marginTop="@dimen/padding_view_normal"
+        android:onClick="onSaveExerciseButtonClicked"
+        style="@style/ButtonDark"/>
 
     </LinearLayout>
 

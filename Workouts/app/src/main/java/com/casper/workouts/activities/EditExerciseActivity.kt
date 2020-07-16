@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.text.InputType
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
@@ -15,11 +14,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.casper.workouts.R
 import com.casper.workouts.adapters.WorkoutExerciseAdapter.Companion.EXTRA_EXERCISE
-import com.casper.workouts.callbacks.InputDialogCallback
 import com.casper.workouts.custom.getFilePath
 import com.casper.workouts.custom.loadUrl
 import com.casper.workouts.data.UserData
-import com.casper.workouts.dialogs.InputDialog
 import com.casper.workouts.room.models.Exercise
 import com.casper.workouts.room.viewmodels.ExerciseViewModel
 import com.casper.workouts.utils.FileUtils
@@ -36,6 +33,7 @@ import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_weight
 import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_weight_reps
 import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_weight_unit
 import kotlinx.android.synthetic.main.activity_exercise_edit.timer_checkbox
+import kotlinx.android.synthetic.main.activity_exercise_edit.timer_seconds
 
 class EditExerciseActivity : AppCompatActivity() {
     private lateinit var exercise: Exercise
@@ -60,7 +58,8 @@ class EditExerciseActivity : AppCompatActivity() {
         exercise.reps?.let { exercise_weight_reps.setText(it.toString()) }
         exercise.sets?.let { exercise_sets.setText(it.toString()) }
 
-        timer_checkbox.isChecked = exercise.timer
+        timer_seconds.setText(exercise.timerSeconds.toString())
+        timer_checkbox.isChecked = exercise.timerEnabled
 
         exercise.imageName?.let {
             if (it.isNotEmpty()) {
@@ -92,6 +91,7 @@ class EditExerciseActivity : AppCompatActivity() {
         val exerciseUnit = exercise_weight_unit.text.toString().trim()
         val exerciseSets = exercise_sets.text.toString().trim()
         val exerciseReps = exercise_weight_reps.text.toString().trim()
+        val timerSeconds = timer_seconds.text.toString().trim()
         val timerEnabled = timer_checkbox.isChecked
 
         if (exerciseName.isEmpty()) {
@@ -117,6 +117,7 @@ class EditExerciseActivity : AppCompatActivity() {
         val exerciseWeightDouble = exerciseWeight.toDoubleOrNull()
         val exerciseSetsInt = exerciseSets.toIntOrNull()
         val exerciseRepsInt = exerciseReps.toIntOrNull()
+        val timerSecondsInt = timerSeconds.toIntOrNull()
 
         // Update exercise object
         exercise.name = exerciseName
@@ -126,7 +127,8 @@ class EditExerciseActivity : AppCompatActivity() {
         exercise.weightUnit = exerciseUnit
         exercise.sets = exerciseSetsInt
         exercise.reps = exerciseRepsInt
-        exercise.timer = timerEnabled
+        exercise.timerSeconds = timerSecondsInt ?: 0
+        exercise.timerEnabled = timerEnabled
         exercise.updateDate()
 
         // Save image and update imageName

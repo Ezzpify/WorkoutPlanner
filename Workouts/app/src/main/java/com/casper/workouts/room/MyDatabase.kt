@@ -14,7 +14,7 @@ import com.casper.workouts.room.models.*
 import com.casper.workouts.room.models.junctions.DayExerciseCrossRef
 import kotlinx.coroutines.CoroutineScope
 
-@Database(entities = [Workout::class, Week::class, Day::class, Exercise::class, DayExerciseCrossRef::class], exportSchema = false, version = 2)
+@Database(entities = [Workout::class, Week::class, Day::class, Exercise::class, DayExerciseCrossRef::class], exportSchema = false, version = 3)
 abstract class MyDatabase : RoomDatabase() {
     abstract fun workoutDao(): WorkoutDao
     abstract fun weekDao(): WeekDao
@@ -31,6 +31,12 @@ abstract class MyDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE Exercises ADD COLUMN TimerSeconds INTEGER NOT NULL default 0;")
+            }
+        }
+
         fun getDatabase(context: Context, scope: CoroutineScope): MyDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
@@ -43,7 +49,7 @@ abstract class MyDatabase : RoomDatabase() {
                     // Wipes and rebuilds instead of migrating if no Migration object.
                     // Migration is not part of this codelab.
                     .fallbackToDestructiveMigration()
-                    .addMigrations(MIGRATION_1_2)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                     .build()
                 Companion.instance = instance
                 // return instance
