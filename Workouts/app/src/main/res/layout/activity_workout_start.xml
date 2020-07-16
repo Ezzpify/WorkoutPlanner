@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorBackground">
 
-    <androidx.core.widget.NestedScrollView
+    <!--<androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -160,69 +160,57 @@
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>-->
 
-    <RelativeLayout
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_alignParentBottom="true"
         android:padding="@dimen/padding_view_normal">
 
-        <LinearLayout
+        <com.ncorti.slidetoact.SlideToActView
+            android:id="@+id/timer_slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:outer_color="@color/colorAccent"
+            app:inner_color="@color/colorContent"
+            app:border_radius="@dimen/rounded_value_normal"
+            app:slider_height="60dp"
+            app:icon_margin="8dp"
+            app:text_size="@dimen/text_size_medium"
+            android:elevation="@dimen/card_view_elevation"
+            android:layout_marginBottom="@dimen/padding_view_tiny"
+            app:text_style="bold"
+            app:text="@string/activity_workout_start_slide_to_complete_workout"
+            android:visibility="gone"/>
 
-            <com.ncorti.slidetoact.SlideToActView
-                android:id="@+id/timer_slider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:outer_color="@color/colorContent"
-                app:inner_color="@color/colorAccent"
-                app:slider_height="50dp"
-                app:icon_margin="8dp"
-                app:text_size="@dimen/text_size_medium"
-                android:elevation="@dimen/card_view_elevation"
-                android:layout_marginStart="@dimen/padding_view_tiny"
-                android:layout_marginEnd="@dimen/padding_view_tiny"
-                app:text_style="bold"
-                app:slider_icon="@drawable/ic_baseline_timer_24"
-                app:text="@string/activity_workout_start_slide_to_start_stopwatch" />
+        <Button
+            android:id="@+id/next_exercise_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/activity_workout_start_next_exercise"
+            android:onClick="onNextExerciseButtonClicked"
+            style="@style/ButtonBlue"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/padding_view_large"
-                android:layout_marginStart="@dimen/padding_view_tiny"
-                android:layout_marginEnd="@dimen/padding_view_tiny">
+    </LinearLayout>
 
-                <Button
-                    android:id="@+id/previous_exercise_button"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.35"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/previous"
-                    android:layout_marginEnd="@dimen/padding_view_large"
-                    android:visibility="gone"
-                    android:onClick="onPreviousExerciseButtonClicked"
-                    style="@style/ButtonDark"/>
-
-                <Button
-                    android:id="@+id/next_exercise_button"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.65"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/activity_workout_start_next_exercise"
-                    android:onClick="onNextExerciseButtonClicked"
-                    style="@style/ButtonBlue"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </RelativeLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_create_workout"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/padding_view_normal"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_baseline_timer_24"
+        android:tint="@color/white"
+        android:onClick="onTimerButtonClicked"
+        android:visibility="gone"/>
 
 </RelativeLayout>

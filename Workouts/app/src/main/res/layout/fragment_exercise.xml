@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/padding_view_large">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/card_view_elevation"
+        app:cardCornerRadius="@dimen/rounded_value_normal"
+        android:layout_margin="@dimen/card_view_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/exercise_image"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                app:srcCompat="@drawable/default_workout_image"
+                android:scaleType="centerCrop"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/padding_view_large">
+
+                <TextView
+                    android:id="@+id/exercise_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/placeholder"
+                    android:gravity="center_horizontal"
+                    style="@style/PageTitle"/>
+
+                <TextView
+                    android:id="@+id/exercise_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_description"
+                    android:gravity="center_horizontal"
+                    style="@style/PageSubtitle"
+                    android:layout_marginBottom="@dimen/padding_view_normal"/>
+
+                <LinearLayout
+                    android:id="@+id/weight_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/padding_view_normal"
+                    android:paddingEnd="@dimen/padding_view_normal"
+                    android:paddingBottom="@dimen/padding_view_normal">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray"
+                        android:layout_marginBottom="@dimen/padding_view_normal"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/exercise_weight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/activity_workout_start_weight_format"
+                            android:textAllCaps="true"
+                            android:layout_toStartOf="@+id/update_weight_button"
+                            android:layout_marginEnd="@dimen/padding_view_large"
+                            android:drawableStart="@drawable/ic_weight_24dp"
+                            android:drawablePadding="@dimen/padding_view_small"
+                            android:layout_centerVertical="true"
+                            style="@style/PageSubtitleBold"/>
+
+                        <Button
+                            android:id="@+id/update_weight_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/activity_workout_start_update_weight"
+                            style="@style/ButtonRedRounded"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/info_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/padding_view_normal"
+                    android:paddingEnd="@dimen/padding_view_normal"
+                    android:paddingBottom="@dimen/padding_view_normal"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray"
+                        android:layout_marginBottom="@dimen/padding_view_normal"/>
+
+                    <TextView
+                        android:id="@+id/exercise_reps"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_workout_start_reps_format"
+                        android:textAllCaps="true"
+                        android:layout_marginBottom="@dimen/padding_view_tiny"
+                        style="@style/PageSubtitleBold"/>
+
+                    <TextView
+                        android:id="@+id/exercise_sets"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_workout_start_sets_format"
+                        android:textAllCaps="true"
+                        style="@style/PageSubtitleBold"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/timer_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/padding_view_normal"
+                    android:paddingEnd="@dimen/padding_view_normal"
+                    android:paddingBottom="@dimen/padding_view_normal"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray"
+                        android:layout_marginBottom="@dimen/padding_view_normal"/>
+
+                    <Button
+                        android:id="@+id/start_timer_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_workout_start_start_timer"
+                        style="@style/ButtonRedRounded"
+                        android:layout_marginTop="@dimen/padding_view_small"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

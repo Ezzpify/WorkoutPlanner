@@ -58,8 +58,11 @@ class TimerActivity: AppCompatActivity(), Chronometer.OnChronometerTickListener 
     }
 
     override fun onChronometerTick(chronometer: Chronometer) {
+        // Get the elapsed time in ms from when clock was started
         val elapsedTime = SystemClock.elapsedRealtime() - chronometer.base
 
+        // If elapsed time exceeded our vibration time, append the vibration interval
+        // for next time it should vibrate, then vibrate the device.
         if (elapsedTime >= vibrationTimeMs) {
             vibrationTimeMs += vibrationIntervalMs
             vibrate()
@@ -79,8 +82,7 @@ class TimerActivity: AppCompatActivity(), Chronometer.OnChronometerTickListener 
 
         // Animation for showing cool countdown effect :DDDDDDDDDDD
         val animation = AnimationUtils.loadAnimation(this, R.anim.countdown_animation)
-
-        countdownTimer = object: CountDownTimer(5000, 1000) {
+        countdownTimer = object: CountDownTimer(3000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 countdown_text.text = (millisUntilFinished / 1000 + 1).toString()
                 countdown_text.startAnimation(animation)
@@ -95,7 +97,13 @@ class TimerActivity: AppCompatActivity(), Chronometer.OnChronometerTickListener 
                 timer.base = SystemClock.elapsedRealtime()
                 timer.start()
                 timerRunning = true
+
+                // Vibrate to indicate that it started
                 vibrate()
+
+                // Animate the control buttons
+                val fallDownAnimation = AnimationUtils.loadAnimation(this@TimerActivity, R.anim.item_animation_fall_down)
+                control_parent.startAnimation(fallDownAnimation)
             }
         }
         countdownTimer.start()

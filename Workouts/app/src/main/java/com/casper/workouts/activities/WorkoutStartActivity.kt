@@ -2,30 +2,31 @@ package com.casper.workouts.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.casper.workouts.R
 import com.casper.workouts.activities.WorkoutHomeActivity.Companion.EXTRA_WORKOUT_DAY
 import com.casper.workouts.activities.WorkoutHomeActivity.Companion.EXTRA_WORKOUT_WORKOUT
-import com.casper.workouts.callbacks.InputDialogCallback
 import com.casper.workouts.data.UserData
-import com.casper.workouts.dialogs.InputDialog
+import com.casper.workouts.fragments.adapters.ExerciseFragmentAdapter
 import com.casper.workouts.room.models.Day
 import com.casper.workouts.room.models.Exercise
 import com.casper.workouts.room.models.Workout
 import com.casper.workouts.room.viewmodels.ExerciseViewModel
 import com.casper.workouts.room.viewmodels.WorkoutViewModel
-import com.casper.workouts.utils.FileUtils
-import com.casper.workouts.utils.WorkoutUtils
 import com.ncorti.slidetoact.SlideToActView
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_workout_exercises_list.*
 import kotlinx.android.synthetic.main.activity_workout_start.*
+import kotlin.math.abs
+import kotlin.math.max
 
-class WorkoutStartActivity: AppCompatActivity(), SlideToActView.OnSlideCompleteListener {
+
+class WorkoutStartActivity: AppCompatActivity(), SlideToActView.OnSlideCompleteListener,
+    ViewPager2.PageTransformer {
     private lateinit var workout: Workout
     private lateinit var day: Day
 
@@ -33,7 +34,6 @@ class WorkoutStartActivity: AppCompatActivity(), SlideToActView.OnSlideCompleteL
     private lateinit var workoutViewModel: WorkoutViewModel
 
     // Exercise variables
-    private var currentExerciseIndex = 0
     private lateinit var exercises: List<Exercise>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,105 +56,58 @@ class WorkoutStartActivity: AppCompatActivity(), SlideToActView.OnSlideCompleteL
             }
 
             exercises = day.exercises.sortedBy { it.sortingIndex }
-            displayNextExercise()
+
+            val exerciseAdapter = ExerciseFragmentAdapter(this, exercises)
+            view_pager.adapter = exerciseAdapter
         })
+
+        view_pager.offscreenPageLimit = 5
+        view_pager.setPageTransformer(this)
+        view_pager.registerOnPageChangeCallback(viewPagerOnPageChangeCallback)
 
         timer_slider.onSlideCompleteListener = this
     }
 
-    private fun displayNextExercise() {
-        // Get our current exercise
-        val exercise = exercises[currentExerciseIndex]
+    override fun transformPage(page: View, position: Float) {
+        val minScale = 0.85f
+        val minAlpha = 0.5f
 
-        // Update UI with basic information
-        exercise_name.text = exercise.name
-        exercise.description?.let {
-            if (it.isNotEmpty()) {
-                exercise_description.text = it
-            }
-            else {
-                exercise_description.text = getString(R.string.no_description)
-            }
-        }
+        page.apply {
+            val pageWidth = width
+            val pageHeight = height
+            when {
+                position < -1 -> { // [-Infinity,-1)
+                    // This page is way off-screen to the left.
+                    alpha = 0f
+                }
+                position <= 1 -> { // [-1,1]
+                    // Modify the default slide transition to shrink the page as well
+                    val scaleFactor = max(minScale, 1 - abs(position))
+                    val verticalMargin = pageHeight * (1 - scaleFactor) / 2
+                    val horizontalMargin = pageWidth * (1 - scaleFactor) / 2
+                    translationX = if (position < 0) {
+                        horizontalMargin - verticalMargin / 2
+                    } else {
+                        horizontalMargin + verticalMargin / 2
+                    }
 
-        exercise.imageName?.let { imageName ->
-            if (imageName.isNotEmpty()) {
-                FileUtils().getWorkoutImage(this, imageName)?.let { image ->
-                    Picasso.get().load(image).into(exercise_image)
+                    // Scale the page down (between MIN_SCALE and 1)
+                    scaleX = scaleFactor
+                    scaleY = scaleFactor
+
+                    // Fade the page relative to its size.
+                    alpha = (minAlpha +
+                            (((scaleFactor - minScale) / (1 - minScale)) * (1 - minAlpha)))
+                }
+                else -> { // (1,+Infinity]
+                    // This page is way off-screen to the right.
+                    alpha = 0f
                 }
             }
-            else {
-                Picasso.get().load(R.drawable.default_workout_image).into(exercise_image)
-            }
-        }
-
-        // Update UI weight information, hide view if weight is null
-        if (exercise.weight != null) {
-            exercise_weight.text = getString(R.string.activity_workout_start_weight_format, exercise.weight, exercise.weightUnit)
-            weight_parent.visibility = View.VISIBLE
-        }
-        else {
-            weight_parent.visibility = View.GONE
-        }
-
-        // Update info panel with reps and sets
-        if (exercise.reps == null && exercise.sets == null) {
-            info_parent.visibility = View.GONE
-        }
-        else {
-            info_parent.visibility = View.VISIBLE
-
-            // Reps text
-            if (exercise.reps != null) {
-                exercise_reps.text = getString(R.string.activity_workout_start_reps_format, exercise.reps)
-                exercise_reps.visibility = View.VISIBLE
-            }
-            else {
-                exercise_reps.visibility = View.GONE
-            }
-
-            // Sets text
-            if (exercise.sets != null) {
-                exercise_sets.text = getString(R.string.activity_workout_start_sets_format, exercise.sets)
-                exercise_sets.visibility = View.VISIBLE
-            }
-            else {
-                exercise_sets.visibility = View.GONE
-            }
-        }
-
-        // Enable previous button if possible
-        previous_exercise_button.visibility = if (currentExerciseIndex > 0) View.VISIBLE else View.GONE
-
-        // Show next or done button if we have another exercise
-        val nextExerciseIndex = currentExerciseIndex + 1
-        if (exercises.size - 1 < nextExerciseIndex) {
-            // No exercises after this one, change next button to done
-            next_exercise_button.text = getString(R.string.activity_workout_start_complete_workout)
-            next_exercise_button.tag = EXERCISE_BUTTON_COMPLETE
-        }
-        else {
-            next_exercise_button.text = getString(R.string.activity_workout_start_next_exercise)
-            next_exercise_button.tag = EXERCISE_BUTTON_NEXT
         }
     }
 
-    fun onPreviousExerciseButtonClicked(view: View) {
-        currentExerciseIndex -= 1
-        displayNextExercise()
-    }
-
-    fun onNextExerciseButtonClicked(view: View) {
-        if (view.tag == EXERCISE_BUTTON_NEXT) {
-            currentExerciseIndex += 1
-            displayNextExercise()
-        }
-        else {
-            exerciseCompleted()
-        }
-    }
-
-    private fun exerciseCompleted() {
+    override fun onSlideComplete(view: SlideToActView) {
         // Update last workout unix date
         UserData(this).lastWorkoutUnixDate = System.currentTimeMillis()
 
@@ -168,40 +121,64 @@ class WorkoutStartActivity: AppCompatActivity(), SlideToActView.OnSlideCompleteL
         finish()
     }
 
-    fun onUpdateWeightButtonClicked(view: View) {
-        val currentExercise = exercises[currentExerciseIndex]
-
-        InputDialog(this,
-            getString(R.string.activity_workout_start_update_weight_dialog_title),
-            getString(R.string.activity_workout_start_update_weight_dialog_desc),
-            currentExercise.weight.toString(),
-            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL,
-            object: InputDialogCallback {
-                override fun result(value: String) {
-                    // If new value is same as old then we don't need to change anything
-                    if (currentExercise.weight.toString() == value) {
-                        return
-                    }
-
-                    val newValue = value.toDouble()
-                    currentExercise.weight = newValue
-                    currentExercise.updateDate()
-
-                    // Update UI and Data set
-                    exercise_weight.text = getString(R.string.activity_workout_start_weight_format, newValue, currentExercise.weightUnit)
-                    exerciseViewModel.update(currentExercise)
-                }
-            }).show()
+    fun onNextExerciseButtonClicked(view: View) {
+        view_pager.setCurrentItem(view_pager.currentItem + 1, true)
     }
 
-    override fun onSlideComplete(view: SlideToActView) {
-        val intent = Intent(this, TimerActivity::class.java)
-        startActivity(intent)
-        timer_slider.resetSlider()
+    private var atEndOfSlide: Boolean = false
+    private var viewPagerOnPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            // If we reach the end of the viewpager we will show the slide to finish workout
+            if (position == exercises.size - 1) {
+                showCompleteSlider()
+                atEndOfSlide = true
+            }
+            else if (atEndOfSlide) {
+                showNextExerciseButton()
+                atEndOfSlide = false
+            }
+        }
     }
 
-    companion object {
-        const val EXERCISE_BUTTON_NEXT = "EXERCISE_NEXT"
-        const val EXERCISE_BUTTON_COMPLETE = "EXERCISE_COMPLETE"
+    private fun showCompleteSlider() {
+        val fallDownAnim = AnimationUtils.loadAnimation(this@WorkoutStartActivity, R.anim.button_fall_down)
+        val fallUpAnim = AnimationUtils.loadAnimation(this@WorkoutStartActivity, R.anim.button_fall_up)
+        fallDownAnim.setAnimationListener(object: Animation.AnimationListener {
+            override fun onAnimationRepeat(p0: Animation?) {
+
+            }
+
+            override fun onAnimationEnd(p0: Animation?) {
+                next_exercise_button.visibility = View.GONE
+                timer_slider.visibility = View.VISIBLE
+                timer_slider.startAnimation(fallUpAnim)
+            }
+
+            override fun onAnimationStart(p0: Animation?) {
+
+            }
+        })
+        next_exercise_button.startAnimation(fallDownAnim)
+    }
+
+    private fun showNextExerciseButton() {
+        val fallDownAnim = AnimationUtils.loadAnimation(this@WorkoutStartActivity, R.anim.button_fall_down)
+        val fallUpAnim = AnimationUtils.loadAnimation(this@WorkoutStartActivity, R.anim.button_fall_up)
+        fallDownAnim.setAnimationListener(object: Animation.AnimationListener {
+            override fun onAnimationRepeat(p0: Animation?) {
+
+            }
+
+            override fun onAnimationEnd(p0: Animation?) {
+                timer_slider.visibility = View.GONE
+                next_exercise_button.visibility = View.VISIBLE
+                next_exercise_button.startAnimation(fallUpAnim)
+            }
+
+            override fun onAnimationStart(p0: Animation?) {
+
+            }
+        })
+        timer_slider.startAnimation(fallDownAnim)
     }
 }

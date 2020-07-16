@@ -83,6 +83,7 @@
     <string name="activity_create_exercise_input_hint_weight_unit">Unit</string>
     <string name="activity_create_exercise_input_hint_sets">Number of sets</string>
     <string name="activity_create_exercise_input_hint_reps">Number of reps</string>
+    <string name="activity_create_exercise_checkbox_enable_timer">Enable timer</string>
 
     <!-- Activity exercise search -->
     <string name="activity_exercise_search_title">Search exercises</string>
@@ -93,10 +94,11 @@
     <string name="activity_workout_start_deload_weight_format">Deload weight: %1$.2f %2$s</string>
     <string name="activity_workout_start_reps_format">%1$d Repetitions</string>
     <string name="activity_workout_start_sets_format">%1$d Sets</string>
-    <string name="activity_workout_start_update_weight">Update weight</string>
+    <string name="activity_workout_start_update_weight">Update</string>
     <string name="activity_workout_start_next_exercise">Next exercise</string>
     <string name="activity_workout_start_complete_workout">Complete workout</string>
-    <string name="activity_workout_start_slide_to_start_stopwatch">SLIDE TO START STOPWATCH</string>
+    <string name="activity_workout_start_start_timer">Start timer</string>
+    <string name="activity_workout_start_slide_to_complete_workout">SLIDE TO COMPLETE WORKOUT</string>
     <string name="activity_workout_start_update_weight_dialog_title">Update weight</string>
     <string name="activity_workout_start_update_weight_dialog_desc">Enter your new weight for this exercise.\n\nThis will change the weight in all days which this exercise belongs to.</string>
 

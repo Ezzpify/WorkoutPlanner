@@ -24,12 +24,18 @@ import com.casper.workouts.room.models.Exercise
 import com.casper.workouts.room.viewmodels.ExerciseViewModel
 import com.casper.workouts.utils.FileUtils
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_create_exercise.*
 import kotlinx.android.synthetic.main.activity_exercise_edit.*
 import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_description
 import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_image
+import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_image_overlay
 import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_name
 import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_sets
+import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_tag
 import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_weight
+import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_weight_reps
+import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_weight_unit
+import kotlinx.android.synthetic.main.activity_exercise_edit.timer_checkbox
 
 class EditExerciseActivity : AppCompatActivity() {
     private lateinit var exercise: Exercise
@@ -53,6 +59,8 @@ class EditExerciseActivity : AppCompatActivity() {
         exercise.weight?.let { exercise_weight.setText(it.toString()) }
         exercise.reps?.let { exercise_weight_reps.setText(it.toString()) }
         exercise.sets?.let { exercise_sets.setText(it.toString()) }
+
+        timer_checkbox.isChecked = exercise.timer
 
         exercise.imageName?.let {
             if (it.isNotEmpty()) {
@@ -84,6 +92,7 @@ class EditExerciseActivity : AppCompatActivity() {
         val exerciseUnit = exercise_weight_unit.text.toString().trim()
         val exerciseSets = exercise_sets.text.toString().trim()
         val exerciseReps = exercise_weight_reps.text.toString().trim()
+        val timerEnabled = timer_checkbox.isChecked
 
         if (exerciseName.isEmpty()) {
             exercise_name.error = errorText
@@ -117,6 +126,7 @@ class EditExerciseActivity : AppCompatActivity() {
         exercise.weightUnit = exerciseUnit
         exercise.sets = exerciseSetsInt
         exercise.reps = exerciseRepsInt
+        exercise.timer = timerEnabled
         exercise.updateDate()
 
         // Save image and update imageName

@@ -160,13 +160,21 @@
 
         </LinearLayout>
 
+        <CheckBox
+            android:id="@+id/timer_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_view_normal"
+            android:text="@string/activity_create_exercise_checkbox_enable_timer"
+            style="@style/Checkbox"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/save"
             android:onClick="onSaveButtonClicked"
-            android:layout_marginTop="@dimen/padding_view_large"
+            android:layout_marginTop="@dimen/padding_view_normal"
             style="@style/ButtonDark"/>
 
     </LinearLayout>
