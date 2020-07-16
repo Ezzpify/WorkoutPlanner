@@ -61,9 +61,7 @@ class WorkoutStartActivity: AppCompatActivity(), SlideToActView.OnSlideCompleteL
             val exerciseAdapter = ExerciseFragmentAdapter(this, exercises)
             view_pager.adapter = exerciseAdapter
 
-            TabLayoutMediator(tab_layout, view_pager) { tab, position ->
-                //Some implementation
-            }.attach()
+            TabLayoutMediator(tab_layout, view_pager) { _, _ ->}.attach()
         })
 
         view_pager.offscreenPageLimit = 5
@@ -110,43 +108,6 @@ class WorkoutStartActivity: AppCompatActivity(), SlideToActView.OnSlideCompleteL
                 }
             }
         }
-
-        /*val minScale = 0.85f
-        val minAlpha = 0.5f
-
-        page.apply {
-            val pageWidth = width
-            val pageHeight = height
-            when {
-                position < -1 -> { // [-Infinity,-1)
-                    // This page is way off-screen to the left.
-                    alpha = 0f
-                }
-                position <= 1 -> { // (0,1]
-                    // Modify the default slide transition to shrink the page as well
-                    val scaleFactor = max(minScale, 1 - abs(position))
-                    val verticalMargin = pageHeight * (1 - scaleFactor) / 2
-                    val horizontalMargin = pageWidth * (1 - scaleFactor) / 2
-                    translationX = if (position < 0) {
-                        horizontalMargin - verticalMargin / 2
-                    } else {
-                        horizontalMargin + verticalMargin / 2
-                    }
-
-                    // Scale the page down (between MIN_SCALE and 1)
-                    scaleX = scaleFactor
-                    scaleY = scaleFactor
-
-                    // Fade the page relative to its size.
-                    alpha = (minAlpha +
-                            (((scaleFactor - minScale) / (1 - minScale)) * (1 - minAlpha)))
-                }
-                else -> { // (1,+Infinity]
-                    // This page is way off-screen to the right.
-                    alpha = 0f
-                }
-            }
-        }*/
     }
 
     override fun onSlideComplete(view: SlideToActView) {
@@ -154,7 +115,7 @@ class WorkoutStartActivity: AppCompatActivity(), SlideToActView.OnSlideCompleteL
         UserData(this).lastWorkoutUnixDate = System.currentTimeMillis()
 
         //Update workout data and move to next day
-        workout.currentWorkoutDay += 1
+        workout.currentWorkoutIndex += 1
         workoutViewModel.update(workout)
 
         // Show splash screen

@@ -21,9 +21,11 @@ data class Workout (
 
     @ColumnInfo(name = "ImageName") var imageName: String?,
 
-    @ColumnInfo(name = "CurrentWorkoutWeek") var currentWorkoutWeek: Int,
+    @ColumnInfo(name = "CurrentWorkoutWeek") var currentWorkoutWeek: Int, // UNUSED, DELETE SOON
 
-    @ColumnInfo(name = "CurrentWorkoutDay") var currentWorkoutDay: Int,
+    @ColumnInfo(name = "CurrentWorkoutDay") var currentWorkoutDay: Int, // UNUSED, DELETE SOON
+
+    @ColumnInfo(name = "CurrentWorkoutIndex") var currentWorkoutIndex: Int,
 
     @ColumnInfo(name = "LastUpdated") var lastUpdated: Long = System.currentTimeMillis()
 ) : Serializable {

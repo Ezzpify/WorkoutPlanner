@@ -119,4 +119,7 @@
     <!-- Activity workout edit -->
     <string name="activity_workout_edit_title">Edit workout</string>
 
+    <!-- Fragment workout -->
+    <string name="fragment_workout_exercise_count">Exercises: %1$d</string>
+
 </resources>

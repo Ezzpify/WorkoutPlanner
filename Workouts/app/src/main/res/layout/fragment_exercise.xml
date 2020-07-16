@@ -45,6 +45,7 @@
                     android:text="@string/no_description"
                     android:gravity="center_horizontal"
                     style="@style/PageSubtitle"
+                    android:layout_marginTop="@dimen/padding_view_tiny"
                     android:layout_marginBottom="@dimen/padding_view_normal"/>
 
                 <LinearLayout

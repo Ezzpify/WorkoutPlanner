@@ -8,5 +8,5 @@ import com.casper.workouts.room.models.Exercise
 
 class ExerciseFragmentAdapter(activity: AppCompatActivity, val exercises: List<Exercise>): FragmentStateAdapter(activity) {
     override fun getItemCount(): Int = exercises.size
-    override fun createFragment(position: Int): Fragment = ExerciseFragment(exercises[position])
+    override fun createFragment(position: Int): Fragment = ExerciseFragment.newInstance(exercises[position])
 }
