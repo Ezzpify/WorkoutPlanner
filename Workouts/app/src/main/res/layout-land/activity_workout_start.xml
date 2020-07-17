@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBackground">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/padding_view_large">
+
+        <com.ncorti.slidetoact.SlideToActView
+            android:id="@+id/timer_slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:outer_color="@color/colorAccent"
+            app:inner_color="@color/colorContent"
+            app:border_radius="@dimen/rounded_value_normal"
+            app:slider_height="60dp"
+            app:icon_margin="8dp"
+            app:text_size="@dimen/text_size_medium"
+            android:elevation="@dimen/card_view_elevation"
+            android:layout_marginBottom="@dimen/padding_view_tiny"
+            app:text_style="bold"
+            app:text="@string/activity_workout_start_slide_to_complete_workout"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/next_exercise_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/activity_workout_start_next_exercise"
+            android:onClick="onNextExerciseButtonClicked"
+            style="@style/ButtonBlue"/>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

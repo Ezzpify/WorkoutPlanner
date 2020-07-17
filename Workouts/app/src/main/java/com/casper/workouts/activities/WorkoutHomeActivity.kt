@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.doOnLayout
@@ -52,6 +53,11 @@ class WorkoutHomeActivity : AppCompatActivity(), ViewPager2.PageTransformer {
         home_workout.visibility = View.GONE
         home_no_schedule.visibility = View.GONE
 
+        // Initially hide all views
+        view_pager.visibility = View.INVISIBLE
+        action_parent.visibility = View.GONE
+        button_create_workout.visibility = View.GONE
+
         // Set view data
         workout_title.text = workoutName
 
@@ -83,10 +89,32 @@ class WorkoutHomeActivity : AppCompatActivity(), ViewPager2.PageTransformer {
                 var index = fullWorkout.workout.currentWorkoutIndex
                 if (index > workoutDays.size - 1) index = 0
 
-                // Allow for fragments to be set up before setting default item
-                GlobalScope.launch(Dispatchers.Main) {
-                    delay(350)
-                    view_pager.setCurrentItem(index, true)
+                // When ViewPager items are laid out we'll play some display animations
+                view_pager.doOnLayout {
+                    view_pager.setCurrentItem(index, false)
+
+                    // Show all controls with animations
+                    val dropAnimation = AnimationUtils.loadAnimation(this@WorkoutHomeActivity, R.anim.item_fall_up)
+                    val dropAnimationTwo = AnimationUtils.loadAnimation(this@WorkoutHomeActivity, R.anim.item_fall_up)
+                    dropAnimation.setAnimationListener(object: Animation.AnimationListener {
+                        override fun onAnimationRepeat(p0: Animation?) {
+
+                        }
+
+                        override fun onAnimationEnd(p0: Animation?) {
+                            action_parent.visibility = View.VISIBLE
+                            action_parent.startAnimation(dropAnimationTwo)
+
+                            button_create_workout.visibility = View.VISIBLE
+                            button_create_workout.startAnimation(dropAnimationTwo)
+                        }
+
+                        override fun onAnimationStart(p0: Animation?) {
+
+                        }
+                    })
+                    view_pager.visibility = View.VISIBLE
+                    view_pager.startAnimation(dropAnimation)
                 }
 
                 TabLayoutMediator(tab_layout, view_pager) { _, _ ->}.attach()
@@ -99,9 +127,6 @@ class WorkoutHomeActivity : AppCompatActivity(), ViewPager2.PageTransformer {
         view_pager.offscreenPageLimit = 5
         view_pager.setPageTransformer(this)
         view_pager.registerOnPageChangeCallback(viewPagerOnPageChangeCallback)
-
-        val dropAnimation = AnimationUtils.loadAnimation(this, R.anim.item_fall_up)
-        action_parent.startAnimation(dropAnimation)
     }
 
     override fun transformPage(page: View, position: Float) {
@@ -144,19 +169,6 @@ class WorkoutHomeActivity : AppCompatActivity(), ViewPager2.PageTransformer {
     }
 
     private var viewPagerOnPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) {
-            // If we reach the end of the viewpager we will show the slide to finish workout
-            /*if (position == exercises.size - 1) {
-                showCompleteSlider()
-                atEndOfSlide = true
-            }
-            else if (atEndOfSlide) {
-                showNextExerciseButton()
-                atEndOfSlide = false
-            }*/
-            //fullWorkout.workout.currentWorkoutIndex = position
-        }
-
         private var onLastPage = false
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             // Check if we're on the last page

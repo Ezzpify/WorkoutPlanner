@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="@dimen/padding_view_burger"
-            android:paddingBottom="@dimen/padding_view_burger"
+            android:paddingTop="@dimen/padding_view_normal"
+            android:paddingBottom="@dimen/padding_view_normal"
             android:paddingStart="@dimen/padding_view_large"
             android:paddingEnd="@dimen/padding_view_large">
 
@@ -41,7 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/gray"
-                android:layout_margin="@dimen/padding_view_normal"/>
+                android:layout_margin="@dimen/padding_view_normal"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/workout_exercise_count"
