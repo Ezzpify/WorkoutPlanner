@@ -13,7 +13,7 @@ class FileUtils {
         val originalFile = File(path)
         val targetFile = File(targetDir, originalFile.name)
         originalFile.copyTo(targetFile, true)
-        return originalFile.name
+        return targetFile.absolutePath
     }
 
     /**
@@ -26,6 +26,10 @@ class FileUtils {
             return imageFile
 
         return null
+    }
+
+    public fun isLocalFile(path: String): Boolean {
+        return !path.startsWith("http")
     }
 
     private fun getWorkoutImageFolder(context: Context) : File {

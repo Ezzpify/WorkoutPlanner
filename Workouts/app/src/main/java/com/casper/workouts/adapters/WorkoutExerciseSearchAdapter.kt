@@ -16,47 +16,63 @@ import com.casper.workouts.custom.inflate
 import com.casper.workouts.dialogs.OptionDialog
 import com.casper.workouts.room.models.Exercise
 import kotlinx.android.synthetic.main.adapter_workout_exercise_item.view.*
+import kotlinx.android.synthetic.main.adapter_workout_exercise_item.view.delete
 import kotlinx.android.synthetic.main.adapter_workout_exercise_item.view.description
+import kotlinx.android.synthetic.main.adapter_workout_exercise_item.view.edit
+import kotlinx.android.synthetic.main.adapter_workout_exercise_item.view.exercise_reps_sets
+import kotlinx.android.synthetic.main.adapter_workout_exercise_item.view.exercise_tag
+import kotlinx.android.synthetic.main.adapter_workout_exercise_item.view.exercise_weight
+import kotlinx.android.synthetic.main.adapter_workout_exercise_item.view.main_item
+import kotlinx.android.synthetic.main.adapter_workout_exercise_item.view.swipe_layout
 import kotlinx.android.synthetic.main.adapter_workout_exercise_item.view.title
+import kotlinx.android.synthetic.main.adapter_workout_exercise_search_item.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class WorkoutExerciseAdapter(val deleteItemCallback: DeleteItemCallback) : RecyclerView.Adapter<WorkoutExerciseAdapter.ExerciseHolder>() {
-
+class WorkoutExerciseSearchAdapter(val selectedCallback: SearchExerciseSelectedCallback, val deleteCallback: DeleteItemCallback) : RecyclerView.Adapter<WorkoutExerciseSearchAdapter.ExerciseHolder>(),
+    Filterable {
     var itemPositionsChanged = false
 
     private var items = emptyList<Exercise>()
+    private var filteredItems = emptyList<Exercise>()
 
-    override fun getItemCount() = items.size
+    private val filter = ExerciseFilter()
 
-    fun doesContainExerciseId(id: Long): Boolean = items.any { it.exerciseId == id }
+    override fun getFilter(): Filter {
+        return filter
+    }
+
+    override fun getItemCount() = filteredItems.size
+
+    fun doesContainExerciseId(id: Long): Boolean = filteredItems.any { it.exerciseId == id }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseHolder {
-        val inflatedView = parent.inflate(R.layout.adapter_workout_exercise_item, false)
+        val inflatedView = parent.inflate(R.layout.adapter_workout_exercise_search_item, false)
         return ExerciseHolder(inflatedView)
     }
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
-        val exerciseItem = items[position]
+        val exerciseItem = filteredItems[position]
         holder.bindExercise(exerciseItem)
     }
 
     fun setItems(exercises: List<Exercise>) {
         this.items = exercises
+        this.filteredItems = exercises
         notifyDataSetChanged()
     }
 
-    fun getItems(): List<Exercise> = this.items
+    fun getItems(): List<Exercise> = this.filteredItems
 
     fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
         if (fromPosition < toPosition) {
             for (i in fromPosition until toPosition) {
-                Collections.swap(items, i, i + 1)
+                Collections.swap(filteredItems, i, i + 1)
             }
         }
         else {
             for (i in fromPosition downTo toPosition + 1) {
-                Collections.swap(items, i, i - 1)
+                Collections.swap(filteredItems, i, i - 1)
             }
         }
 
@@ -84,7 +100,19 @@ class WorkoutExerciseAdapter(val deleteItemCallback: DeleteItemCallback) : Recyc
             setWeight(exercise.weight, exercise.weightUnit)
             setRepsSets(exercise.reps, exercise.sets)
 
+            // Front view click listener
+            view.main_item.setOnClickListener {
+                item?.let {
+                    selectedCallback.onExerciseSelected(it)
+                }
+            }
+
             // Back view click listeners
+            view.copy.setOnClickListener {
+                item?.let { exercise ->
+                    selectedCallback.onExerciseCopied(exercise)
+                }
+            }
             view.edit.setOnClickListener {
                 val context = itemView.context
                 val intent = Intent(context, EditExerciseActivity::class.java)
@@ -97,7 +125,7 @@ class WorkoutExerciseAdapter(val deleteItemCallback: DeleteItemCallback) : Recyc
                 val context = view.context
                 OptionDialog(context,
                     context.getString(R.string.delete),
-                    context.getString(R.string.activity_workout_exercise_delete_workout_dialog_desc, exercise.name),
+                    context.getString(R.string.activity_workout_exercise_delete_workout_permanently_dialog_desc, exercise.name),
                     context.getString(R.string.cancel),
                     context.getString(R.string.yes),
                     object: OptionDialogCallback {
@@ -106,7 +134,7 @@ class WorkoutExerciseAdapter(val deleteItemCallback: DeleteItemCallback) : Recyc
                         }
 
                         override fun optionTwoClicked() {
-                            deleteItemCallback.onDeleted(exercise)
+                            deleteCallback.onDeleted(exercise)
                         }
                     }).show()
 
@@ -153,6 +181,45 @@ class WorkoutExerciseAdapter(val deleteItemCallback: DeleteItemCallback) : Recyc
             }
             else {
                 view.exercise_reps_sets.visibility = View.GONE
+            }
+        }
+    }
+
+    inner class ExerciseFilter : Filter() {
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            val results = FilterResults()
+            val resultList = ArrayList<Exercise>()
+
+            constraint?.let { c ->
+                val queryText = c.toString().toLowerCase(Locale.getDefault())
+
+                if (queryText.isNotEmpty()) {
+                    // Filter through items to find matching results
+                    // We only filter by exercise name, though
+                    for (exercise in items) {
+                        if (exercise.name.toLowerCase(Locale.getDefault()).contains(queryText, true)
+                            || exercise.muscleWorked.toLowerCase(Locale.getDefault()).contains(queryText, true)) {
+                            resultList.add(exercise)
+                        }
+                    }
+
+                    results.values = resultList
+                }
+                else {
+                    // Empty query, return original items
+                    results.values = items
+                }
+            }
+
+            return results
+        }
+
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            results?.values.let { values ->
+                // I'm a fucking wizard so I already know what type the 'Any' will be
+                @Suppress("UNCHECKED_CAST")
+                filteredItems = values as ArrayList<Exercise>
+                notifyDataSetChanged()
             }
         }
     }

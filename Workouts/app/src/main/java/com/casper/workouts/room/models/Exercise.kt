@@ -7,11 +7,11 @@ import java.sql.Date
 @Entity(tableName = "Exercises", indices = [Index("ExerciseID")])
 data class Exercise (
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "ExerciseID") val exerciseId: Long,
+    @ColumnInfo(name = "ExerciseID") var exerciseId: Long,
 
     @ColumnInfo(name = "Name") var name: String,
 
-    @ColumnInfo(name = "Tag") var tag: String,
+    @ColumnInfo(name = "MuscleWorked") var muscleWorked: String,
 
     @ColumnInfo(name = "Description") var description: String?,
 
@@ -25,9 +25,11 @@ data class Exercise (
 
     @ColumnInfo(name = "TimerSeconds") var timerSeconds: Int,
 
-    @ColumnInfo(name = "Timer") var timerEnabled: Boolean,
+    @ColumnInfo(name = "TimerEnabled") var timerEnabled: Boolean,
 
-    @ColumnInfo(name = "ImageName") var imageName: String?,
+    @ColumnInfo(name = "ImageUrl") var imageUrl: String?,
+
+    @ColumnInfo(name = "HasBeenSetUp") var hasBeenSetUp: Boolean = true,
 
     @ColumnInfo(name = "LastUpdated") var lastUpdated: Long = System.currentTimeMillis()
 ) : Serializable {

@@ -4,4 +4,5 @@ import com.casper.workouts.room.models.Exercise
 
 interface SearchExerciseSelectedCallback {
     fun onExerciseSelected(exercise: Exercise)
+    fun onExerciseCopied(exercise: Exercise)
 }

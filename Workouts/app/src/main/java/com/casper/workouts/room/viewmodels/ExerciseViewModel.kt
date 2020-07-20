@@ -42,6 +42,10 @@ class ExerciseViewModel(application: Application) : AndroidViewModel(application
         repository.update(exercises)
     }
 
+    fun delete(exercise: Exercise)  = viewModelScope.launch(Dispatchers.IO) {
+        repository.delete(exercise)
+    }
+
     fun deleteJunction(dayId: Long, exerciseId: Long) = viewModelScope.launch(Dispatchers.IO) {
         repository.deleteJunction(dayId, exerciseId)
     }

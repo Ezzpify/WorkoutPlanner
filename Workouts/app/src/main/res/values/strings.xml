@@ -14,6 +14,7 @@
     <string name="previous">Previous</string>
     <string name="cancel">Cancel</string>
     <string name="no_description">No description</string>
+    <string name="description">Description</string>
     <string name="delete">Delete</string>
     <string name="never">Never</string>
     <string name="yes">Yes</string>
@@ -66,11 +67,12 @@
     <!-- Activity workout exercise -->
     <string name="activity_workout_exercise_title">Scheduled exercises: %1$d</string>
     <string name="activity_workout_exercise_add_dialog_title">Add exercise</string>
-    <string name="activity_workout_exercise_add_dialog_desc">Do you want to create a new exercise, or add one that you already made?</string>
+    <string name="activity_workout_exercise_add_dialog_desc">Do you want to create a new exercise, or pick an existing one?</string>
     <string name="activity_workout_exercise_add_dialog_option_one">Existing</string>
     <string name="activity_workout_exercise_add_dialog_option_two">New</string>
     <string name="activity_workout_exercise_already_exists_error">This exercise is already added.</string>
     <string name="activity_workout_exercise_delete_workout_dialog_desc">Deleting exercise %1$s will only remove it from this day.\n\nYou can always re-add this exercise again, or add it to another day.</string>
+    <string name="activity_workout_exercise_delete_workout_permanently_dialog_desc">Are you sure you want to delete %1$s?\n\nIt will be gone forever.</string>
 
     <!-- Activity create exercise -->
     <string name="activity_create_exercise_title">Create exercise</string>
@@ -78,7 +80,7 @@
     <string name="activity_create_exercise_input_hint_name">* Exercise name</string>
     <string name="activity_create_exercise_input_hint_desc">Exercise description</string>
     <string name="activity_create_exercise_input_hint_deload">Deload percentage</string>
-    <string name="activity_create_exercise_input_tag_desc">* Exercise tag (Chest, bicep, …)</string>
+    <string name="activity_create_exercise_input_tag_desc">* Muscle worked (Chest, bicep …)</string>
     <string name="activity_create_exercise_input_hint_weight">Current weight</string>
     <string name="activity_create_exercise_input_hint_weight_unit">Unit</string>
     <string name="activity_create_exercise_input_hint_sets">Number of sets</string>
@@ -121,5 +123,11 @@
 
     <!-- Fragment workout -->
     <string name="fragment_workout_exercise_count">Exercises: %1$d</string>
+
+    <!-- Activity setup -->
+    <string name="activity_setup_title">Setting up…</string>
+
+    <!-- Activity workout complete -->
+    <string name="activity_workout_complete_title">Workout complete</string>
 
 </resources>

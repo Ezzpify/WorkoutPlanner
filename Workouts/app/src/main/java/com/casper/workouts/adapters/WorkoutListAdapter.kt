@@ -14,7 +14,9 @@ import com.casper.workouts.custom.inflate
 import com.casper.workouts.dialogs.OptionDialog
 import com.casper.workouts.utils.FileUtils
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_exercise_edit.*
 import kotlinx.android.synthetic.main.adapter_workout_list_item.view.*
+import java.io.File
 import java.util.*
 
 class WorkoutListAdapter(private val callback: DeleteItemCallback) : RecyclerView.Adapter<WorkoutListAdapter.WorkoutHolder>() {
@@ -70,11 +72,12 @@ class WorkoutListAdapter(private val callback: DeleteItemCallback) : RecyclerVie
             item = workout
 
             // Get workout image
-            workout.imageName?.let { imageName ->
-                if (imageName.isNotEmpty()) {
-                    FileUtils().getWorkoutImage(view.context, imageName)?.let { file ->
-                        Picasso.get().load(file).into(view.image)
-                    }
+            workout.imageUrl?.let {
+                if (FileUtils().isLocalFile(it)) {
+                    Picasso.get().load(File(it)).placeholder(R.drawable.default_workout_image).into(view.image)
+                }
+                else {
+                    Picasso.get().load(it).placeholder(R.drawable.default_workout_image).into(view.image)
                 }
             }
 

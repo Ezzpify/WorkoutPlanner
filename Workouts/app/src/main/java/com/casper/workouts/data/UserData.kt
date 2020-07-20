@@ -21,6 +21,18 @@ class UserData(private val context: Context) {
             }
         }
 
+    var firstTimeSetupCompleted: Boolean
+        get() {
+            return getSharedPrefs().getBoolean(context.getString(R.string.sp_first_time_setup), false)
+        }
+        set(value) {
+            val sharedPreferences = getSharedPrefs()
+            with (sharedPreferences.edit()) {
+                putBoolean(context.getString(R.string.sp_first_time_setup), value)
+                commit()
+            }
+        }
+
     var lastUsedWeightUnit: String
         get() {
             getSharedPrefs().getString(context.getString(R.string.sp_last_used_weight_unit), "")?.let { value ->

@@ -32,6 +32,11 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
     }
 
     @WorkerThread
+    suspend fun delete(exercises: Exercise) {
+        exerciseDao.delete(exercises)
+    }
+
+    @WorkerThread
     suspend fun deleteJunction(dayId: Long, exerciseId: Long) {
         exerciseDao.deleteJunction(dayId, exerciseId)
     }

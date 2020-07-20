@@ -21,8 +21,6 @@ import com.casper.workouts.room.models.Exercise
 import com.casper.workouts.room.viewmodels.ExerciseViewModel
 import com.casper.workouts.utils.FileUtils
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_create_exercise.*
-import kotlinx.android.synthetic.main.activity_exercise_edit.*
 import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_description
 import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_image
 import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_image_overlay
@@ -34,12 +32,13 @@ import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_weight_rep
 import kotlinx.android.synthetic.main.activity_exercise_edit.exercise_weight_unit
 import kotlinx.android.synthetic.main.activity_exercise_edit.timer_checkbox
 import kotlinx.android.synthetic.main.activity_exercise_edit.timer_seconds
+import java.io.File
 
 class EditExerciseActivity : AppCompatActivity() {
     private lateinit var exercise: Exercise
     private lateinit var exerciseViewModel: ExerciseViewModel
 
-    private var exerciseImagePath: String? = null
+    private var exerciseImageLocalPath: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,9 +49,15 @@ class EditExerciseActivity : AppCompatActivity() {
 
         // Set all UI data
         exercise_name.setText(exercise.name)
-        exercise_tag.setText(exercise.tag)
+        exercise_tag.setText(exercise.muscleWorked)
         exercise_description.setText(exercise.description)
-        exercise_weight_unit.setText(exercise.weightUnit)
+
+        if (exercise.weightUnit.isNullOrEmpty() && UserData(this).lastUsedWeightUnit.isNotEmpty()) {
+            exercise_weight_unit.setText(UserData(this).lastUsedWeightUnit)
+        }
+        else {
+            exercise_weight_unit.setText(exercise.weightUnit)
+        }
 
         exercise.weight?.let { exercise_weight.setText(it.toString()) }
         exercise.reps?.let { exercise_weight_reps.setText(it.toString()) }
@@ -61,14 +66,12 @@ class EditExerciseActivity : AppCompatActivity() {
         timer_seconds.setText(exercise.timerSeconds.toString())
         timer_checkbox.isChecked = exercise.timerEnabled
 
-        exercise.imageName?.let {
-            if (it.isNotEmpty()) {
-                FileUtils().getWorkoutImage(this, it)?.let { image ->
-                    Picasso.get().load(image).into(exercise_image)
-                }
+        exercise.imageUrl?.let {
+            if (FileUtils().isLocalFile(it)) {
+                Picasso.get().load(File(it)).placeholder(R.drawable.default_workout_image).into(exercise_image)
             }
             else {
-                Picasso.get().load(R.drawable.default_workout_image).into(exercise_image)
+                Picasso.get().load(it).placeholder(R.drawable.default_workout_image).into(exercise_image)
             }
         }
 
@@ -121,7 +124,7 @@ class EditExerciseActivity : AppCompatActivity() {
 
         // Update exercise object
         exercise.name = exerciseName
-        exercise.tag = exerciseTag
+        exercise.muscleWorked = exerciseTag
         exercise.description = exerciseDesc
         exercise.weight = exerciseWeightDouble
         exercise.weightUnit = exerciseUnit
@@ -129,13 +132,12 @@ class EditExerciseActivity : AppCompatActivity() {
         exercise.reps = exerciseRepsInt
         exercise.timerSeconds = timerSecondsInt ?: 0
         exercise.timerEnabled = timerEnabled
+        exercise.hasBeenSetUp = true
         exercise.updateDate()
 
-        // Save image and update imageName
-        var exerciseImageName = ""
-        exerciseImagePath?.let { path ->
-            exerciseImageName = FileUtils().saveWorkoutImage(this, path)
-            exercise.imageName = exerciseImageName
+        // Save image and update imagePath
+        exerciseImageLocalPath?.let { path ->
+            exercise.imageUrl = FileUtils().saveWorkoutImage(this, path)
         }
 
         // Update exercise data set and finish activity
@@ -165,7 +167,7 @@ class EditExerciseActivity : AppCompatActivity() {
 
         if (requestCode == REQUEST_SELECT_IMAGE_IN_ALBUM && resultCode == Activity.RESULT_OK) {
             data?.let { intent ->
-                exerciseImagePath = intent.getFilePath(this)
+                exerciseImageLocalPath = intent.getFilePath(this)
                 exercise_image.loadUrl(intent.data)
 
                 // Remove image overlay

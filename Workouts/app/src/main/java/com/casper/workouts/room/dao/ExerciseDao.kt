@@ -11,7 +11,7 @@ interface ExerciseDao {
     @Query("SELECT * FROM Exercises ORDER BY Name ASC")
     fun getAllExercises(): LiveData<List<Exercise>>
 
-    @Query("SELECT DISTINCT Tag FROM Exercises ORDER BY Name ASC")
+    @Query("SELECT DISTINCT MuscleWorked FROM Exercises ORDER BY Name ASC")
     fun getAllExerciseTags(): LiveData<List<String>>
 
     @Transaction
@@ -20,6 +20,9 @@ interface ExerciseDao {
 
     @Update
     fun update(exercise: Exercise)
+
+    @Delete
+    fun delete(exercise: Exercise)
 
     @Update
     fun update(exercises: List<Exercise>)

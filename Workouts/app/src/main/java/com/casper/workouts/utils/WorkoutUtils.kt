@@ -6,7 +6,7 @@ import com.casper.workouts.room.models.junctions.FullWorkoutWeek
 import com.casper.workouts.room.models.Workout
 import java.io.Serializable
 
-class WorkoutUtils(private val fullWorkout: FullWorkout) {
+/*class WorkoutUtils(private val fullWorkout: FullWorkout) {
     data class WorkoutInfo(val workout: Workout, val workoutWeek: FullWorkoutWeek, val workoutDay: FullWorkoutDay, val weekIndex: Int, val dayIndex: Int): Serializable
 
     fun moveDayForward() {
@@ -66,4 +66,4 @@ class WorkoutUtils(private val fullWorkout: FullWorkout) {
             return newWeek
         }
     }
-}
+}*/

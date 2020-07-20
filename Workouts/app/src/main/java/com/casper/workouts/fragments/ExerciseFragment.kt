@@ -14,11 +14,19 @@ import com.casper.workouts.activities.TimerActivity
 import com.casper.workouts.adapters.WorkoutListAdapter
 import com.casper.workouts.callbacks.InputDialogCallback
 import com.casper.workouts.dialogs.InputDialog
+import com.casper.workouts.dialogs.NoticeDialog
 import com.casper.workouts.room.models.Exercise
 import com.casper.workouts.room.viewmodels.ExerciseViewModel
 import com.casper.workouts.utils.FileUtils
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_exercise_edit.*
 import kotlinx.android.synthetic.main.fragment_exercise.*
+import kotlinx.android.synthetic.main.fragment_exercise.exercise_description
+import kotlinx.android.synthetic.main.fragment_exercise.exercise_image
+import kotlinx.android.synthetic.main.fragment_exercise.exercise_name
+import kotlinx.android.synthetic.main.fragment_exercise.exercise_sets
+import kotlinx.android.synthetic.main.fragment_exercise.exercise_weight
+import java.io.File
 
 class ExerciseFragment: Fragment() {
     private lateinit var exerciseViewModel: ExerciseViewModel
@@ -45,19 +53,22 @@ class ExerciseFragment: Fragment() {
 
             // Basic exercise information
             exercise_name.text = exercise.name
-            exercise.description?.let {
-                exercise_description.text = if (it.isEmpty()) getString(R.string.no_description) else it
+            exercise.description?.let { desc ->
+                if (desc.isNotEmpty()) {
+                    show_description_button.visibility = View.VISIBLE
+                    show_description_button.setOnClickListener {
+                        NoticeDialog(context!!, getString(R.string.description), desc).show()
+                    }
+                }
             }
 
             // Exercise image
-            exercise.imageName?.let { imageName ->
-                if (imageName.isNotEmpty()) {
-                    FileUtils().getWorkoutImage(context!!, imageName)?.let { image ->
-                        Picasso.get().load(image).into(exercise_image)
-                    }
+            exercise.imageUrl?.let { url ->
+                if (FileUtils().isLocalFile(url)) {
+                    Picasso.get().load(File(url)).placeholder(R.drawable.default_workout_image).into(exercise_image)
                 }
                 else {
-                    Picasso.get().load(R.drawable.default_workout_image).into(exercise_image)
+                    Picasso.get().load(url).placeholder(R.drawable.default_workout_image).into(exercise_image)
                 }
             }
 

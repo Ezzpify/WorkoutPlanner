@@ -19,13 +19,15 @@ import com.casper.workouts.room.viewmodels.WorkoutViewModel
 import com.casper.workouts.utils.FileUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_workout_edit.*
+import kotlinx.android.synthetic.main.adapter_workout_list_item.view.*
+import java.io.File
 
 class EditWorkoutActivity: AppCompatActivity() {
     private lateinit var workout: Workout
 
     private lateinit var workoutViewModel: WorkoutViewModel
 
-    private var workoutImagePath: String? = null
+    private var workoutImageLocalPath: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,14 +39,12 @@ class EditWorkoutActivity: AppCompatActivity() {
         // Set all UI data
         workout_name.setText(workout.name)
         workout_description.setText(workout.description)
-        workout.imageName?.let {
-            if (it.isNotEmpty()) {
-                FileUtils().getWorkoutImage(this, it)?.let { image ->
-                    Picasso.get().load(image).into(workout_image)
-                }
+        workout.imageUrl?.let {
+            if (FileUtils().isLocalFile(it)) {
+                Picasso.get().load(File(it)).placeholder(R.drawable.default_workout_image).into(workout_image)
             }
             else {
-                Picasso.get().load(R.drawable.default_workout_image).into(workout_image)
+                Picasso.get().load(it).placeholder(R.drawable.default_workout_image).into(workout_image)
             }
         }
 
@@ -66,7 +66,7 @@ class EditWorkoutActivity: AppCompatActivity() {
 
         if (requestCode == REQUEST_SELECT_IMAGE_IN_ALBUM && resultCode == Activity.RESULT_OK) {
             data?.let { intent ->
-                workoutImagePath = intent.getFilePath(this)
+                workoutImageLocalPath = intent.getFilePath(this)
                 workout_image.loadUrl(intent.data)
 
                 // Remove image overlay
@@ -114,10 +114,8 @@ class EditWorkoutActivity: AppCompatActivity() {
         workout.updateDate()
 
         // Save image and update imageName
-        var workoutImageName = ""
-        workoutImagePath?.let { path ->
-            workoutImageName = FileUtils().saveWorkoutImage(this, path)
-            workout.imageName = workoutImageName
+        workoutImageLocalPath?.let { path ->
+            workout.imageUrl = FileUtils().saveWorkoutImage(this, path)
         }
 
         // Update data set and finish

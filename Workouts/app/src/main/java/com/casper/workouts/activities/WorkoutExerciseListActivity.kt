@@ -163,7 +163,7 @@ class WorkoutExerciseListActivity : AppCompatActivity(), DeleteItemCallback {
                 val exerciseTag = intent.getStringExtra(CreateExerciseActivity.EXTRA_REPLY_TAG) as String
                 val exerciseDesc = intent.getStringExtra(CreateExerciseActivity.EXTRA_REPLY_DESC)
                 val exerciseUnit = intent.getStringExtra(CreateExerciseActivity.EXTRA_REPLY_UNIT)
-                val exerciseImagePath = intent.getStringExtra(CreateExerciseActivity.EXTRA_REPLY_IMAGE)
+                val exerciseImageName = intent.getStringExtra(CreateExerciseActivity.EXTRA_REPLY_IMAGE)
                 val exerciseWeight = intent.getDoubleExtra(CreateExerciseActivity.EXTRA_REPLY_WEIGHT, -1.0)
                 val exerciseSets = intent.getIntExtra(CreateExerciseActivity.EXTRA_REPLY_SETS, -1)
                 val exerciseReps = intent.getIntExtra(CreateExerciseActivity.EXTRA_REPLY_REPS, -1)
@@ -171,9 +171,9 @@ class WorkoutExerciseListActivity : AppCompatActivity(), DeleteItemCallback {
                 val timerEnabled = intent.getBooleanExtra(CreateExerciseActivity.EXTRA_REPLY_TIMER_ENABLED, false)
 
                 // If we have a photo, copy this to our application folder
-                var exerciseImageName = ""
-                exerciseImagePath?.let { path ->
-                    exerciseImageName = FileUtils().saveWorkoutImage(this, path)
+                var exerciseImagePath = ""
+                exerciseImageName?.let { path ->
+                    exerciseImagePath = FileUtils().saveWorkoutImage(this, path)
                 }
 
                 // Create new exercise object
@@ -187,7 +187,7 @@ class WorkoutExerciseListActivity : AppCompatActivity(), DeleteItemCallback {
                     if (exerciseReps == -1) null else exerciseReps,
                     timerSeconds,
                     timerEnabled,
-                    exerciseImageName)
+                    exerciseImagePath)
 
                 // Now insert the exercise object and wait for UID to be returned so we can insert relation
                 lifecycleScope.launch {
@@ -230,6 +230,13 @@ class WorkoutExerciseListActivity : AppCompatActivity(), DeleteItemCallback {
                         sortingIndex
                     )
                 exerciseViewModel.insert(relation)
+
+                // If exercise has not been set up we will open edit activity
+                if (!exercise.hasBeenSetUp) {
+                    val editIntent = Intent(this, EditExerciseActivity::class.java)
+                    editIntent.putExtra(WorkoutExerciseAdapter.EXTRA_EXERCISE, exercise)
+                    startActivity(editIntent)
+                }
             }
         }
     }

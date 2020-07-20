@@ -2,5 +2,6 @@
 <resources>
     <string name="shared_preference_key" translatable="false">vHn8zqL2ZtLEVVLUJOex</string>
     <string name="sp_last_workout_date_string" translatable="false">last_workout_date_string</string>
+    <string name="sp_first_time_setup" translatable="false">first_time_setup</string>
     <string name="sp_last_used_weight_unit" translatable="false">last_used_weight_unit</string>
 </resources>

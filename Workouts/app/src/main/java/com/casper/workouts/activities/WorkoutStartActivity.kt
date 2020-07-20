@@ -51,7 +51,11 @@ class WorkoutStartActivity: AppCompatActivity(), SlideToActView.OnSlideCompleteL
         exerciseViewModel = ViewModelProvider(this).get(ExerciseViewModel::class.java)
 
         // Set up our exercises
-        exerciseViewModel.getExercises(day.dayId).observe(this, Observer { day ->
+        val observer = exerciseViewModel.getExercises(day.dayId)
+        observer.observe(this, Observer { day ->
+            // Remove observer because we only want this data once
+            observer.removeObservers(this)
+
             // Get the sorting index from the junction table and add that value to all exercise objects so we can sort them
             for ((index, value) in day.extras.withIndex()) {
                 day.exercises[index].sortingIndex = value.sortingIndex

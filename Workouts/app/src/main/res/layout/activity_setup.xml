@@ -15,16 +15,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/activity_workout_complete_title"
+            android:text="@string/activity_setup_title"
             android:textColor="@color/white"
             style="@style/PageTitle"/>
-
-        <ImageView
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            app:srcCompat="@drawable/sunglasses"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/padding_view_large"/>
 
     </LinearLayout>
 

@@ -54,6 +54,12 @@ class MainActivity : AppCompatActivity(), DeleteItemCallback {
                 if (workouts.isEmpty()) {
                     startCreateWorkoutActivity()
                 }
+
+                // Check if we should perform first time setup
+                if (!UserData(this).firstTimeSetupCompleted) {
+                    val intent = Intent(this, SetupActivity::class.java)
+                    startActivity(intent)
+                }
             }
         })
 
@@ -141,19 +147,19 @@ class MainActivity : AppCompatActivity(), DeleteItemCallback {
                 // Get all data for workout
                 val workoutName = intent.getStringExtra(CreateWorkoutActivity.EXTRA_REPLY_NAME) as String
                 val workoutDesc = intent.getStringExtra(CreateWorkoutActivity.EXTRA_REPLY_DESC)
-                val workoutImagePath = intent.getStringExtra(CreateWorkoutActivity.EXTRA_REPLY_IMAGE)
+                val workoutImageLocalPath = intent.getStringExtra(CreateWorkoutActivity.EXTRA_REPLY_IMAGE)
 
                 // If we have a photo, copy this to our application folder
-                var workoutImageName = ""
-                workoutImagePath?.let { path ->
-                    workoutImageName = FileUtils().saveWorkoutImage(this, path)
+                var exerciseImagePath = ""
+                workoutImageLocalPath?.let { path ->
+                    exerciseImagePath = FileUtils().saveWorkoutImage(this, path)
                 }
 
                 // Get next sorting index for list
-                var sortingIndex = adapter.itemCount
+                val sortingIndex = adapter.itemCount
 
                 // Insert workout into db
-                val workout = Workout(0, sortingIndex, workoutName, workoutDesc, workoutImageName, 0, 0, 0)
+                val workout = Workout(0, sortingIndex, workoutName, workoutDesc, exerciseImagePath, 0)
                 workoutViewModel.insert(workout)
             }
         }

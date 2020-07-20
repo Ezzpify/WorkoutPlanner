@@ -19,11 +19,7 @@ data class Workout (
 
     @ColumnInfo(name = "Description") var description: String?,
 
-    @ColumnInfo(name = "ImageName") var imageName: String?,
-
-    @ColumnInfo(name = "CurrentWorkoutWeek") var currentWorkoutWeek: Int, // UNUSED, DELETE SOON
-
-    @ColumnInfo(name = "CurrentWorkoutDay") var currentWorkoutDay: Int, // UNUSED, DELETE SOON
+    @ColumnInfo(name = "ImageUrl") var imageUrl: String?,
 
     @ColumnInfo(name = "CurrentWorkoutIndex") var currentWorkoutIndex: Int,
 

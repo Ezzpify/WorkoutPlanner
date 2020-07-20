@@ -19,7 +19,6 @@ import com.casper.workouts.fragments.adapters.WorkoutFragmentAdapter
 import com.casper.workouts.room.models.junctions.FullWorkout
 import com.casper.workouts.room.viewmodels.WorkoutViewModel
 import com.casper.workouts.utils.WorkoutUtil
-import com.casper.workouts.utils.WorkoutUtils
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_workout_home.*
 import kotlinx.android.synthetic.main.activity_workout_home.view_pager
@@ -52,11 +51,6 @@ class WorkoutHomeActivity : AppCompatActivity(), ViewPager2.PageTransformer {
         // Hide view initially
         home_workout.visibility = View.GONE
         home_no_schedule.visibility = View.GONE
-
-        // Initially hide all views
-        view_pager.visibility = View.INVISIBLE
-        action_parent.visibility = View.GONE
-        button_create_workout.visibility = View.GONE
 
         // Set view data
         workout_title.text = workoutName
@@ -91,30 +85,11 @@ class WorkoutHomeActivity : AppCompatActivity(), ViewPager2.PageTransformer {
 
                 // When ViewPager items are laid out we'll play some display animations
                 view_pager.doOnLayout {
-                    view_pager.setCurrentItem(index, false)
+                    view_pager.setCurrentItem(index, true)
 
                     // Show all controls with animations
                     val dropAnimation = AnimationUtils.loadAnimation(this@WorkoutHomeActivity, R.anim.item_fall_up)
-                    val dropAnimationTwo = AnimationUtils.loadAnimation(this@WorkoutHomeActivity, R.anim.item_fall_up)
-                    dropAnimation.setAnimationListener(object: Animation.AnimationListener {
-                        override fun onAnimationRepeat(p0: Animation?) {
-
-                        }
-
-                        override fun onAnimationEnd(p0: Animation?) {
-                            action_parent.visibility = View.VISIBLE
-                            action_parent.startAnimation(dropAnimationTwo)
-
-                            button_create_workout.visibility = View.VISIBLE
-                            button_create_workout.startAnimation(dropAnimationTwo)
-                        }
-
-                        override fun onAnimationStart(p0: Animation?) {
-
-                        }
-                    })
-                    view_pager.visibility = View.VISIBLE
-                    view_pager.startAnimation(dropAnimation)
+                    action_parent.startAnimation(dropAnimation)
                 }
 
                 TabLayoutMediator(tab_layout, view_pager) { _, _ ->}.attach()
@@ -216,8 +191,10 @@ class WorkoutHomeActivity : AppCompatActivity(), ViewPager2.PageTransformer {
     }
 
     override fun onPause() {
-        fullWorkout.workout.currentWorkoutIndex = view_pager.currentItem
-        workoutViewModel.update(fullWorkout.workout)
+        if (this::fullWorkout.isInitialized) {
+            fullWorkout.workout.currentWorkoutIndex = view_pager.currentItem
+            workoutViewModel.update(fullWorkout.workout)
+        }
         super.onPause()
     }
 

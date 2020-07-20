@@ -61,6 +61,18 @@
 
                 </LinearLayout>
 
+                <ImageView
+                    android:id="@+id/show_description_button"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    app:srcCompat="@drawable/ic_baseline_info_24"
+                    android:tint="@color/white"
+                    android:background="@drawable/circle_black"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/padding_view_small"
+                    android:layout_marginEnd="@dimen/padding_view_small"
+                    android:visibility="invisible"/>
+
             </RelativeLayout>
 
             <LinearLayout
